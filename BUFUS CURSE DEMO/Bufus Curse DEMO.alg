@@ -5,13 +5,13 @@ algoritmo "Bufus Curse"
 var
 
         venceu_barganha, comprou, primeira_vez_reino: logico
-                                primeira_compra_JAYH: logico
+              adentrou_castelo, primeira_compra_JAYH: logico
                 item_comprado_nome, continue, string: caracter
          aleator, aleatorini, local, sub_local, acao: inteiro
           prazo_barganha, barganha, y, x, z, combate: inteiro
     dia_limpo, prazo_assombralis, evento, horas, dia: inteiro
                     locais_liberados: vetor [1..6] de logico
-                            dialogo, liberou_caverna: inteiro
+           dialogo, liberou_caverna, liberou_castelo: inteiro
    conversou, dentro_caverna, primeiro_encontro_anom: logico
       possui_quase_mapa_caverna, possui_mapa_caverna: logico
            pedrorja_dia, area_atual_caverna, paredes: inteiro
@@ -112,8 +112,7 @@ var
    procedimento comeco
    inicio
    em_combate <- falso
-   dia <- 21 // Padrão = 0
-   dia <- 00
+   dia <- 0 // Padrão = 0
    
    escreval ("  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ")
    escreval ("|                                                                                |")
@@ -156,6 +155,11 @@ var
    se (dia >= 21) e (liberou_caverna = 0) entao
       locais_liberados[5] <- verdadeiro
       liberou_caverna <- 1
+   fimse
+   
+   se (cristal = 1) e (liberou_castelo = 0)entao
+      locais_liberados[1] <- verdadeiro
+      liberou_castelo <- 1
    fimse
    
    repita
@@ -253,7 +257,12 @@ var
          liberou_caverna <- 2
          escreva  ("  CAVERNA LIBERADA                Escolha: ")
       senao
-         escreva  ("                                  Escolha: ")
+         se (liberou_castelo = 1) entao
+            liberou_castelo <- 2
+            escreva  ("  CASTELO LIBERADO                Escolha: ")
+         senao
+            escreva  ("                                  Escolha: ")
+         fimse
       fimse
 
       leia (string)
@@ -273,7 +282,10 @@ var
 
       caso 1
          limpatela
-         //   castelo <- verdadeiro
+         
+         andandinho_indo
+         
+         castelo
 
       caso 2
          limpatela
@@ -385,11 +397,20 @@ var
       escreval
       escreva ("                           APERTE (ENTER) PARA  VOLTAR                                                                       ")
       leia (continue)
+      
       se (local = 0) entao
          se (no_menu_itens = verdadeiro) entao
             itens
          senao
             tela_mundo
+         fimse
+      fimse
+
+      se (local = 1) entao
+         se (no_menu_itens = verdadeiro) entao
+            itens
+         senao
+            castelo
          fimse
       fimse
 
@@ -420,11 +441,15 @@ var
       procedimento emocao_batalha
       inicio
       
-      se (index_temp[1] > 0) entao
+      
+      se (index_temp[1] > 0) ou (arma_usando = "KATANA") entao
          cansado <- falso
          neutro <- falso
          euforico <- verdadeiro
-         index_temp[1] <- index_temp[1] - 1
+         
+         se (index_temp[1] > 0) entao
+            index_temp[1] <- index_temp[1] - 1
+         fimse
       senao
          se (index_temp[2] > 0) entao
             cansado <- verdadeiro
@@ -3808,7 +3833,7 @@ var
                         escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                         escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                         escreval ("||   Bufus Anormalis   |   |    |   ~            ",danorecebido :4,"    \  /  _  @@@@@@@@@@    ||")
-                        escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                        escreval ("||- - - - - - - - - - -|  /      \        'PREPARE-SE' (6 _ - ) \  @@@@@@@@@@@@@||")
                         escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                         escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                         escreval ("||                     |                      ~                          @@|    ||")
@@ -3848,7 +3873,7 @@ var
                         escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                         escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                         escreval ("||   Bufus Anormalis      |    |   ~            ",danorecebido :4,"    \  /  _  @@@@@@@@@@    ||")
-                        escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                        escreval ("||- - - - - - - - - - -|  /      \        'PREPARE-SE' (6 _ - ) \  @@@@@@@@@@@@@||")
                         escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                         escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                         escreval ("||                     |                      ~                          @@|    ||")
@@ -3890,7 +3915,7 @@ var
                      escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                      escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                      escreval ("||   Bufus Anormalis   |   |    |   ~            ",danorecebido :4,"    \  /  _  @@@@@@@@@@    ||")
-                     escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                     escreval ("||- - - - - - - - - - -|  /      \        'PREPARE-SE' (@ _ @ ) \  @@@@@@@@@@@@@||")
                      escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                      escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                      escreval ("||                     |                      ~                          @@|    ||")
@@ -3935,7 +3960,7 @@ var
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                   escreval ("||   Bufus Anormalis   |   |    |   ~            ",danorecebido :4,"    \  /  _  @@@@@@@@@@    ||")
-                  escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                  escreval ("||- - - - - - - - - - -|  /      \        'PREPARE-SE' (6 _ - ) \  @@@@@@@@@@@@@||")
                   escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                   escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                   escreval ("||                     |                      ~                          @@|    ||")
@@ -4059,7 +4084,7 @@ var
                      escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                      escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                      escreval ("||   Bufus Anormalis   |   |    |   ~                    \  /  _  @@@@@@@@@@    ||")
-                     escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                     escreval ("||- - - - - - - - - - -|  /      \        'PREPARE-SE' (6 _ - ) \  @@@@@@@@@@@@@||")
                      escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                      escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                      escreval ("||                     |                      ~                          @@|    ||")
@@ -4099,7 +4124,7 @@ var
                      escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                      escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                      escreval ("||   Bufus Anormalis   |   |    |   ~                    \  /  _  @@@@@@@@@@    ||")
-                     escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                     escreval ("||- - - - - - - - - - -|  /      \        'PREPARE-SE' (6 _ - ) \  @@@@@@@@@@@@@||")
                      escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                      escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                      escreval ("||                     |                      ~                          @@|    ||")
@@ -4225,7 +4250,7 @@ var
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                   escreval ("||   Bufus Anormalis   |   |    |   ~                    \  /  _  @@@@@@@@@@    ||")
-                  escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                  escreval ("||- - - - - - - - - - -|  /      \        'PREPARE-SE' (6 _ - ) \  @@@@@@@@@@@@@||")
                   escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                   escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                   escreval ("||                     |                      ~                          @@|    ||")
@@ -4317,7 +4342,7 @@ var
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                   escreval ("||   Bufus Anormalis   |   |    |   ~                    \  /  _  @@@@@@@@@@    ||")
-                  escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                  escreval ("||- - - - - - - - - - -|  /      \        'PREPARE-SE' (6 _ - ) \  @@@@@@@@@@@@@||")
                   escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                   escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                   escreval ("||                     |                      ~                          @@|    ||")
@@ -4355,7 +4380,7 @@ var
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                   escreval ("||   Bufus Anormalis   |   |    |   ~                    \  /  _  @@@@@@@@@@    ||")
-                  escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                  escreval ("||- - - - - - - - - - -|  /      \        'PREPARE-SE' (6 _ - ) \  @@@@@@@@@@@@@||")
                   escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                   escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                   escreval ("||                     |                      ~                          @@|    ||")
@@ -4403,7 +4428,7 @@ var
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                   escreval ("||   Bufus Anormalis   |   |    |   ~            ",danorecebido :4,"    \  /  _  @@@@@@@@@@    ||")
-                  escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                  escreval ("||- - - - - - - - - - -|  /      \        'PREPARE-SE' (6 _ - ) \  @@@@@@@@@@@@@||")
                   escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                   escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                   escreval ("||                     |                      ~                          @@|    ||")
@@ -4482,7 +4507,7 @@ var
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                   escreval ("||   Bufus Anormalis   |   |    |   ~                    \  /  _  @@@@@@@@@@    ||")
-                  escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                  escreval ("||- - - - - - - - - - -|  /      \        'PREPARE-SE' (6 _ - ) \  @@@@@@@@@@@@@||")
                   escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                   escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                   escreval ("||                     |                      ~                          @@|    ||")
@@ -4567,7 +4592,7 @@ var
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                   escreval ("||   Bufus Anormalis   |   |    |   ~            ",danorecebido :4,"    \  /  _  @@@@@@@@@@    ||")
-                  escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                  escreval ("||- - - - - - - - - - -|  /      \        'PREPARE-SE' (6 _ - ) \  @@@@@@@@@@@@@||")
                   escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                   escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                   escreval ("||                     |                      ~                          @@|    ||")
@@ -4646,7 +4671,7 @@ var
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                   escreval ("||   Bufus Anormalis   |   |    |   ~                    \  /  _  @@@@@@@@@@    ||")
-                  escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                  escreval ("||- - - - - - - - - - -|  /      \        'PREPARE-SE' (6 _ - ) \  @@@@@@@@@@@@@||")
                   escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                   escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                   escreval ("||                     |                      ~                          @@|    ||")
@@ -4812,7 +4837,7 @@ var
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                   escreval ("||   Bufus Anormalis   |   |    |   ~            ",danorecebido :4,"    \  /  _  @@@@@@@@@@    ||")
-                  escreval ("||- - - - - - - - - - -|  /      \         °           (6 _ - ) \  @@@@@@@@@@@@@||")
+                  escreval ("||- - - - - - - - - - -|  /      \         °           (@ _ @ ) \  @@@@@@@@@@@@@||")
                   escreval ("||         VS          |                                /`__´\/\|    @@@@\    \_||")
                   escreval ("||- - - - - - - - - - -|        \|/                     |/  \|         @@@\     ||")
                   escreval ("||                     |                      ~                          @@|    ||")
@@ -8994,27 +9019,27 @@ var
                         fimse
                      FIMSE
                      
-                     SE (cristal >= 20) entao
+                     SE (cristal >= 20) e (arma_possui[2] = verdadeiro) entao
                         limpatela
                         escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
                         escreval ("|  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
                         escreval ("||                     |                                   . ´` /| ´` .         ||")
-                        escreval ("||   ANOM, O QUÍMICO   | 'Oh, agora que notei, você tem   /|/ |/ |/ |/|__       ||")
-                        escreval ("||- - - - - - - - - - -| um cristal já, ein... '         /              /       ||")
-                        escreval ("||      *Diálogo*      |                                 |.^^^^^^^^^^. /        ||")
-                        escreval ("||- - - - - - - - - - -|                                 \|___´  `___| |        ||")
-                        escreval ("||                     | 'Veja,  aqui tem um molde para   |_O_.-._O_/|/         ||")
-                        escreval ("||     *Cavaleiro*     | uma  arma, se  entregar  a  um   |/_\ | /_\/|          ||")
-                        escreval ("|| _ _ _ _ _ _ _ _ _ _ | ferreiro, junto de  um  desses   _\_/_|_\_/|____       ||")
-                        escreval ("|||$|     \     /   |$|| cristais, você  irá  conseguir   \ \|\  / |/   /       ||")
-                        escreval ("|||&|   ___\   /___ |&|| uma pistola. '                   /\ \-__-´/ __/        ||")
+                        escreval ("||   ANOM, O QUÍMICO   |  'Você realmente conseguiu...    /|/ |/ |/ |/|__       ||")
+                        escreval ("||- - - - - - - - - - -|  eu... nem consigo acreditar.   /              /       ||")
+                        escreval ("||      *Diálogo*      |  O quão difícil deve ter sido   |.^^^^^^^^^^. /        ||")
+                        escreval ("||- - - - - - - - - - -|  ficar na  caverna  por tanto   \|___´  `___| |        ||")
+                        escreval ("||                     |  tempo... '                      |_O_.-._O_/|/         ||")
+                        escreval ("||     *Cavaleiro*     |                                  |/_\ | /_\/|          ||")
+                        escreval ("|| _ _ _ _ _ _ _ _ _ _ |  'Você  pode, você  realmente    _\_/_|_\_/|____       ||")
+                        escreval ("|||$|     \     /   |$||  pode acabar com isso,  eu...    \ \|\  / |/   /       ||")
+                        escreval ("|||&|   ___\   /___ |&||  nem   consigo   acreditar. '    /\ \-__-´/ __/        ||")
                         escreval ("|||$|   ( 0 ) ( 0 ) |$||                                  | | |  `|    \        ||")
                         escreval ("|||&|         >     |&||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
-                        escreval ("|||$&\   _______   /&$|| 'Hehe,  daora.  Uma arma nova é uma arma nova.  Espero ||")
-                        escreval ("|||&$&\_ \|_|_|/ _/&$&|| que o Suens não se importe, mas imagino que se ele for ||")
-                        escreval ("|||$&$&$|       |$&$&$|| ganhar  grana  com  isso,  estará tudo bem com isso. ' ||")
+                        escreval ("|||$&\   _______   /&$||                                                        ||")
+                        escreval ("|||&$&\_ \|_|_|/ _/&$&||  'Estranho. O que será que ele quer dizer com isso? '  ||")
+                        escreval ("|||$&$&$|       |$&$&$||                                                        ||")
                         escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
-                        escreval (" < PISTOLA DE FLORES LIBERADA >")
+                        escreval ("")
                         molde_pistola <- verdadeiro
                         escreval ("                        ( Pressione ENTER para continuar )                        ")
                         escreval
@@ -9024,23 +9049,24 @@ var
 
                         limpatela
                         escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
-                        escreval ("|  Para sair, digite 'SAIR' ou 'S' _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+                        escreval ("|  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
                         escreval ("||                     |                                   . ´` /| ´` .         ||")
-                        escreval ("||   ANOM, O QUÍMICO   |                                  /|/ |/ |/ |/|__       ||")
-                        escreval ("||- - - - - - - - - - -| 'Uma coisa também, sei que é    /              /       ||")
-                        escreval ("||      *Diálogo*      | difícil, mas ouça bem...  se    |.^^^^^^^^^^. /        ||")
-                        escreval ("||- - - - - - - - - - -| você conseguir  cerca  de 20    \|___`  ´___| |        ||")
-                        escreval ("||                     | desses cristais... '             |_O_.-._O_/|/         ||")
-                        escreval ("||     *Cavaleiro*     |                                  |/_\ | /_\/|          ||")
-                        escreval ("|| _ _ _ _ _ _ _ _ _ _ | 'Volte aqui se  conseguir...     _\_/_|_\_/|____       ||")
-                        escreval ("|||#|     \     /   |@|| apenas isso. '                   \ \|\  / |/   /       ||")
-                        escreval ("|||@|   ___\   /___ |#||                                  /\ \-__-´/ __/        ||")
-                        escreval ("|||#|     (0)  (0)  |@||                                  | | |  `|    \        ||")
-                        escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
-                        escreval ("|||#@\     _ __    /#@|| 'Posso tentar,  suponho que devo pegar mais estando na ||")
-                        escreval ("|||@#@\_         _/#@#|| caverna.  Seja lá como posso  pegar uns  20  desses. ' ||")
-                        escreval ("|||#@#@#|       |@#@#@|| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _||")
+                        escreval ("||   ANOM, O QUÍMICO   | 'Pegarei a Pistola e hoje mesmo  /|/ |/ |/ |/|__       ||")
+                        escreval ("||- - - - - - - - - - -| irei acabar  com  essa merda... /              /       ||")
+                        escreval ("||      *Diálogo*      | por favor, Cavaleiro... '       |.^^^^^^^^^^. /        ||")
+                        escreval ("||- - - - - - - - - - -|                                 \|___\  /___| |        ||")
+                        escreval ("||                     | 'Peço que espere um  pouco  por  |_U_.-._U_/|/         ||")
+                        escreval ("||     *Cavaleiro*     | aqui, não vou demorar... '       |/_\ | /_\/|          ||")
+                        escreval ("|| _ _ _ _ _ _ _ _ _ _ |                                  _\_/_|_\_/|____       ||")
+                        escreval ("|||$|     \     /   |$|| 'A maldição deixará  de existir  \ \|\  / |/   /       ||")
+                        escreval ("|||&|   ___\   /___ |&|| graças a ti. '                   /\ \-__-´/ __/        ||")
+                        escreval ("|||$|   ( 0 ) ( 0 ) |$||                                  | | |  `|    \        ||")
+                        escreval ("|||&|         >     |&||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
+                        escreval ("|||$&\   _______   /&$|| 'UOU, AGORA SIM ENTENDI.  SIM.  FINALMENTE VOU CUMPRIR ||")
+                        escreval ("|||&$&\_ \|_|_|/ _/&$&|| MINHA FUNÇÃO, YES.                                     ||")
+                        escreval ("|||$&$&$|       |$&$&$|| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _||")
                         escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+                        
                         escreval
                         escreval ("            ( Pressione ENTER para continuar e SAIR ou S para parar. )            ")
                         escreval
@@ -9048,9 +9074,7 @@ var
                         leia (string)
                         string <- maiusc(string)
 
-                        se (string = "S") ou (string = "SAIR") entao
-                            lojinha_caverna_anom
-                        fimse
+
                      FIMSE
                      
                      se (dialogo = 0) entao
@@ -11612,6 +11636,20 @@ var
                      fimse
                   fimse
 
+                  se (consumivel_quanti[7] > 0) entao
+                     //Index = 7   "Restrela"     Recupera totalmente a armadura
+                     index <- index + 1
+                     index_usar[7] <- index
+                     escreval
+                     escreval ("|     /V\     | Rocha estranha e completamente limitada. Acho |    RESTRELA   |")
+                     escreval ("| ___/___\___ | que apenas o Legendaris possuia. ( * o * )    |               |")
+                     escreval ("| \  \   /  / |-----------------------------------------------|   Quant:",consumivel_quanti[7]:3,"   |")
+                     escreval ("|  \  \_/  /  | Recupera totalmente a AM.                     |               |")
+                     escreval ("|  /_/###\_\  |                                               |   < '",index," ' >   |")
+                     escreval
+                     escreval (" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ")
+                  fimse
+
                   se (consumivel_quanti[8] > 0) entao
                      //Index = 8   "Nomeaqui"     Descrição leve aqui
                      index <- index + 1
@@ -11625,6 +11663,7 @@ var
                      escreval
                      escreval (" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ")
                   fimse
+                  
                   se (consumivel_quanti[9] > 0) entao
                      //Index = X   "Nomeaqui"     Descrição leve aqui
                      index <- index + 1
@@ -11732,11 +11771,23 @@ var
                                  en <- en + enmax * 0.4 * acao
                                  mn <- mn + mnmax * 0.4 * acao
                                  
+                                 danorecebido <- 0
+                                 
                                  limitar_status
                                  
                                  index_usou[5] <- falso
                               fimse
+                              
+                              se (index_usou[7] = verdadeiro) entao //Restrela
+                                 am <- ammax
 
+                                 danorecebido <- 0
+
+                                 limitar_status
+
+                                 index_usou[7] <- falso
+                              fimse
+                              
                            fimse
                         fimse
                      fimse
@@ -11812,7 +11863,7 @@ var
             se (combate = 0) entao
 
                //Bufus Regularis Solo
-               se (hp > hpmax - 2) ou (index_temp[1] > 0) entao
+               se (hp > hpmax - 2) ou (index_temp[1] > 0) ou (arma_usando = "KATANA") entao
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |        |      |                                FLORESTA||")
                   escreval ("||   Bufus Regularis   |        |  \|/ |                          w             ||")
@@ -11884,7 +11935,7 @@ var
             se (combate = 1) entao
 
                //Bufus Anormalis Solo Floresta
-               se (hp > hpmax - 2) ou (index_temp[1] > 0) entao
+               se (hp > hpmax - 2) ou (index_temp[1] > 0) ou (arma_usando = "KATANA") entao
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |   |    |          \|/          º    º   @@@@@@ FLORESTA||")
                   escreval ("||   Bufus Regularis   |   |    |   ~                    \  /  _  @@@@@@@@@@    ||")
@@ -11955,7 +12006,7 @@ var
             se (combate = 2) entao  //Mudar
             
                //Bufus Retardalis Solo Lago
-               se (hp > hpmax - 2) ou (index_temp[1] > 0) entao
+               se (hp > hpmax - 2) ou (index_temp[1] > 0) ou (arma_usando = "KATANA") entao
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |                       _    _                       LAGO||")
                   escreval ("||   Bufus Retardalis  |                      /^\__/^\                          ||")
@@ -12026,7 +12077,7 @@ var
             se (combate = 3) entao
             
                //Bufus Intankalis Solo Caverna
-               se (hp > hpmax - 2) ou (index_temp[1] > 0) entao
+               se (hp > hpmax - 2) ou (index_temp[1] > 0) ou (arma_usando = "KATANA") entao
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |           /                     |\            | Caverna||")
                   escreval ("||  Bufus  Intankalis  |          /                   __/  \           | #######||")
@@ -12096,7 +12147,7 @@ var
             se (combate = 4) entao
             
                //Bufus Imoralis Solo Caverna
-               se (hp > hpmax - 2) ou (index_temp[1] > 0) entao
+               se (hp > hpmax - 2) ou (index_temp[1] > 0) ou (arma_usando = "KATANA") entao
                
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |           /            / \_/ \   ______       | CAVERNA||")
@@ -12171,7 +12222,7 @@ var
                      
             se (combate = 4444) entao
                //Bufus Assombralis
-               se (hp > hpmax - 2) ou (index_temp[1] > 0) entao
+               se (hp > hpmax - 2) ou (index_temp[1] > 0) ou (arma_usando = "KATANA") entao
                   escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
                   escreval ("||                     |!!!!!!!!!!!!!!!!!!!!!!!\   \!!!!!!!!/   /!!!!!!!!!!!!!!!||")
                   escreval ("||  Bufus Assombralis  |!!!!!!!!!!!!!!!!!!!!!!!!\ ____    ____ /!!!!!!!!!!!!!!!!||")
@@ -12243,7 +12294,9 @@ var
 
             procedimento golpes_batalha
             inicio
-
+            
+            agiu <- falso
+            
             se (golpes_nat = 0) entao  // Padrão
 
                repita
@@ -13267,8 +13320,131 @@ var
                   
                fimse
 
+               se (golpes_nat = 55555) entao  // Katana
+                  repita
+                     limpatela
 
+                     telas_combates
 
+                     escreval
+                     escreval ("                                    O QUE FAZER?                                  ")
+                     se (hp > 5) entao
+                        escreval ("             1 <Corte> (Dn: 100%)(-3 En) | 2 <Imolar> (Dn: 200%)(-3 En)(-5 Hp)    ")
+                     senao
+                        escreval ("             1 <Corte> (Dn: 100%)(-3 En) | X <Imolar> (Dn: 200%)(-3 En)(-5 Hp)    ")
+                     fimse
+                     escreval ("                          (Golpes Curam e causam Sangramento)                     ")
+                     escreval ("                                                         3 <Golpes com Condições> ")
+
+                     escreva  (" S <Voltar>                          Escolha: ")
+                     leia (string)
+
+                     string <- maiusc(string)
+                     se (string = "SAIR") ou (string = "S") entao
+                        limpatela
+                        combate_atual
+                     fimse
+                     
+                     se (hp <= 5) e (string = "2") entao
+                         string <- "X"
+                     fimse
+                     
+                  ate (string = "1") ou (string = "2") ou (string = "3") ou (string = "9")
+
+                  acao <- caracpnum(string)
+
+                  escolha acao
+
+                  caso 1
+
+                     limpatela
+
+                     emocao_batalha
+
+                     primeiro_turno <- falso
+                     agiu <- verdadeiro
+                     
+                     en <- en - 3
+                     danorecebido <- dn
+                     
+                     se (euforico = verdadeiro) entao
+                        danorecebido <- danorecebido * 1.3
+                     fimse
+                     
+                     hpini <- hpini - danorecebido
+                     
+                     hp <- hp + int(danorecebido * 0.25)
+
+                     danorecebido <- danorecebido * (1 - 2)
+                     
+                     aleator <- randi(1)
+                     
+                     atordoo <- falso
+                     
+                     se (index_temp[3] < 4) entao
+                        index_temp[3] <- index_temp[3] + 4
+                     fimse
+                     
+                     ini_sangrando
+
+                     //Ataque////////
+                     ac_combate <- 1
+                     ///////////////
+                     acao_ant_player <- numpcarac(ac_combate)
+
+                     combate_atual
+
+                  caso 2
+
+                     limpatela
+
+                     emocao_batalha
+
+                     primeiro_turno <- falso
+                     agiu <- verdadeiro
+
+                     en <- en - 3
+                     hp <- hp - 5
+                     danorecebido <- int(dn * 2)
+
+                     se (euforico = verdadeiro) entao
+                        danorecebido <- danorecebido * 1.3
+                     fimse
+
+                     hpini <- hpini - danorecebido
+
+                     hp <- hp + int(danorecebido * 0.25)
+
+                     danorecebido <- danorecebido * (1 - 2)
+                     
+                     aleator <- randi(1)
+                     
+                     atordoo <- falso
+                     
+                     se (index_temp[3] < 4) entao
+                        index_temp[3] <- index_temp[3] + 4
+                     fimse
+                     
+                     ini_sangrando
+
+                     //Ataque////////
+                     ac_combate <- 1
+                     ///////////////
+                     acao_ant_player <- numpcarac(ac_combate)
+
+                     combate_atual
+
+                  caso 3
+                     acao <- 0
+                     golpes_condicoes
+                     
+                  caso 9
+                     limpatela
+
+                     combate_atual
+                  fimescolha
+
+               fimse
 
                se (golpes_nat = 4444) entao  // Livro Mágico Básico
                   repita
@@ -13636,7 +13812,9 @@ var
 
                   procedimento bloqueios_batalha
                   inicio
-
+                  
+                  agiu <- falso
+                  
                   se (bloqueios = 0) entao
                      repita
                         limpatela
@@ -13659,6 +13837,9 @@ var
                            fimse
                            se (golpes_nat = 4444) entao
                               escreval ("  3 <Barreira> (+10 Am)(-3 Mn)       'Proteção mágica transparente e brilhante'  ")
+                           fimse
+                           se (golpes_nat = 55555) entao
+                              escreval ("  3 <Agilidade> (+3 Am)(+7 En)       'Proteção mediante concentração e desvios'  ")
                            fimse
                         fimse
                         escrevaL
@@ -13793,7 +13974,29 @@ var
 
                                  combate_atual
                               fimse
+                              
+                              se (golpes_nat = 55555) entao
+                                 limpatela
 
+                                 primeiro_turno <- falso
+                                 agiu <- verdadeiro
+
+                                 am <- am + 3
+                                 en <- en + 7
+
+                                 atordoo <- falso
+
+                                 //Bloqueio/////
+                                 ac_combate <- 2
+                                 ///////////////
+
+                                 emocao_batalha
+
+                                 acao_ant_player <- numpcarac(ac_combate)
+
+                                 combate_atual
+                              fimse
+                              
                            fimse
                         caso 9
                            limpatela
@@ -15572,14 +15775,14 @@ var
 
                      se (arma_possui[3] = verdadeiro) entao
                         index <- index + 1
-                        index_equipar[3] <- index              // Katana
-                        escreval ("/                 | <Disparos> (Dp: 50%)(-1 En)(-2 Mn por HIT)|    EDITAR     \")
-                        escreval ("|   K A T A N A   |      <Concentração> (Dp: 20%)(+5 Mn)      |               |")
-                        escreval ("|                 |   <Explosão> (Dp: 400%)(-10 Mn)(-10% Hp)  |    EQUIPAR    |")
+                        index_equipar[3] <- index
+                        escreval ("/                 | <Corte> (Dn: 100%)(-3 En)     <Imolar>    |               \")
+                        escreval ("|   K A T A N A   +-------------------------+(Dn: 200%)(-3 En)|               |")
+                        escreval ("|                 |<Agilidade>(+3 Am)(+7 En)|     (-5 Hp)     |    EQUIPAR    |")
                         escreval ("|       D O       +-------------------------------------------+               |")
-                        escreval ("|                 |<Fraqueza>(Dp: 25%)(-4 Mn)(-10% Dn Inimigo)|   < '",index," ' >   |")
-                        escreval ("|   S A N G U E   +-------------------------------------------+               |")
-                        escreval ("\                 |        <Barreira> (+10 Am)(-3 Mn)         |               /")
+                        escreval ("|                 | PASSIVA: Em combates sempre está Eufórico |   < '",index," ' >   |")
+                        escreval ("|   S A N G U E   | PASSIVA: Golpes sempre causam Sangramento |               |")
+                        escreval ("\                 | PASSIVA: Golpes Curam 25% do Dano Causado |               /")
                         escreval
                         escreval
                      fimse
@@ -15668,6 +15871,10 @@ var
                   
                   se (y = 2) entao
                      arma_usando <- "PISTOLA"
+                  fimse
+                  
+                  se (y = 3) entao
+                     arma_usando <- "KATANA"
                   fimse
                   
                   se (y = 4) entao
@@ -15844,8 +16051,6 @@ var
                         escreval
                         escreval (" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ")
                         fimse
-
-
                      fimse
 
                      se (consumivel_quanti[1] > 0) entao
@@ -15870,8 +16075,6 @@ var
                         escreval
                         escreval (" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ")
                         fimse
-
-
                      fimse
 
                      se (consumivel_quanti[3] > 0) entao
@@ -15896,9 +16099,8 @@ var
                         escreval
                         escreval (" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ")
                         fimse
-
-
                      fimse
+                     
                      se (consumivel_quanti[5] > 0) entao
                         //Index = 5   "Tipalinha"     Restaura HP e EN
                         index <- index + 1
@@ -15921,8 +16123,8 @@ var
                         escreval
                         escreval (" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ")
                         fimse
-
                      fimse
+                     
                      se (consumivel_quanti[6] > 0) entao
                         //Index = 6   "Pirocha"     Dano em 8 por unidade
                         index <- index + 1
@@ -15946,6 +16148,22 @@ var
                         escreval (" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ")
                         fimse
                      fimse
+                     
+                     se (consumivel_quanti[7] > 0) entao
+                        //Index = 7   "Restrela"     Recupera totalmente a armadura
+                        index <- index + 1
+                        index_usar[7] <- index
+                        escreval
+                        escreval ("|     /V\     | Rocha estranha e completamente limitada. Acho |    RESTRELA   |")
+                        escreval ("| ___/___\___ | que apenas o Legendaris possuia. ( * o * )    |               |")
+                        escreval ("| \  \   /  / |-----------------------------------------------|   Quant:",consumivel_quanti[7]:3,"   |")
+                        escreval ("|  \  \_/  /  | Recupera totalmente a AM.                     |               |")
+                        escreval ("|  /_/###\_\  |                                               |   < '",index," ' >   |")
+                        escreval
+                        escreval (" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ")
+                     fimse
+                     
+                     
                      se (consumivel_quanti[8] > 0) entao
                         //Index = 8   "Nomeaqui"     Descrição leve aqui
                         index <- index + 1
@@ -16123,7 +16341,15 @@ var
                               index_usou[6] <- falso
 
                               sair_inventario
+                           fimse
+                           
+                           se (index_usou[7] = verdadeiro) entao //Restrela
+                              am <- ammax
 
+                              danorecebido <- 0
+
+                              limitar_status
+                              index_usou[7] <- falso
                            fimse
                         fimse
                      fimse
@@ -16141,32 +16367,7 @@ var
 
                   repita
                      limpatela
-                     /////////////////////////////
-                     SE (combate = 44)entao
-                        para x de 0 ate 3 faca
-                           equipamento_cabeca_possui[x] <- VERDADEIRO  //EXCLUIR
-                        fimpara
 
-                        equipamento_cabeca_possui[4] <- VERDADEIRO
-
-                        para x de 0 ate 3 faca
-                           equipamento_tronco_possui[x] <- VERDADEIRO  //EXCLUIR
-                        fimpara
-                        equipamento_tronco_possui[4] <- VERDADEIRO
-
-                        para x de 0 ate 5 faca
-                           equipamento_pulso_possui[x] <- VERDADEIRO  //EXCLUIR
-                        fimpara
-
-                        para x de 0 ate 3 faca
-                           equipamento_pernas_possui[x] <- VERDADEIRO  //EXCLUIR
-                        fimpara
-
-                        para x de 0 ate 4 faca
-                           equipamento_pes_possui[x] <- VERDADEIRO  //EXCLUIR
-                        fimpara
-                     FIMSE
-                     ///////////////////////////////////
                      escreval ("  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ")
                      escreval ("| _Para sair, digite 'SAIR' ou 'S' _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _EQUIPAMENTOS |")
                      escreval ("||                |                                                             ||")
@@ -17796,7 +17997,11 @@ var
                   se (local = 0) entao
                      tela_mundo
                   fimse
-
+                  
+                  se (local = 1) entao
+                     castelo
+                  fimse
+                  
                   se (local = 2) entao
                      reino_tela
                   fimse
@@ -17843,7 +18048,6 @@ var
 
                         se (usou_item = falso) entao
                            combate_atual
-                           
                         senao
 
                            //Inventário////
@@ -18012,29 +18216,61 @@ var
                         ate (evento < 8)
                         ////////////////////////////////
                         limpatela
+                        se (locais_liberados[2] = falso) entao
+                           se (evento % 7 = 0) entao
+                              ferreiro_reino_suens //aprimorar_equipamentos
+                           fimse
+                           se (evento % 6 = 0) entao
+                              lojinha_reino_oderik //comprar_equipamentos_tronco
+                           fimse
+                           se (evento % 5 = 0) entao
+                              lojinha_reino_oderik //comprar_equipamentos_tronco
+                           fimse
+                           se (evento % 4 = 0) entao
+                              lojinha_reino_jayh   //comprar_equipamentos_pernas_e_pes
+                           fimse
+                           se (evento % 3 = 0) entao
+                              lojinha_reino_oderik //comprar_equipamentos_cabeca
+                           fimse
+                           se (evento % 2 = 0) entao
+                              lojinha_reino_oderik //comprar_equipamentos_cabeca
+                           fimse
+                           se (evento % 1 = 0) entao
+                              lojinha_reino_hira   //Dinero_KAKAKAKAKA
+                           fimse
+                        senao
+                           se (evento % 1 = 0) entao
+                              lojinha_reino_hira   //Dinero_KAKAKAKAKA
+                           senao
+                              se (evento % 7 = 0) entao
+                                 ferreiro_reino_suens //aprimorar_equipamentos
+                              senao
+                                 repita
+                                    escreval ("                                ESCOLHA LOJINHA                                   ")
+                                    escreval ("  1 <Equipamentos Cabeça> | 2 <Equipamentos Tronco> | 3 <Equipamentos Pernas/Pés> ")
+                                    escreval
 
-                        se (evento % 7 = 0) entao
-                           ferreiro_reino_suens //aprimorar_equipamentos
-                        fimse
-                        se (evento % 6 = 0) entao
-                           lojinha_reino_oderik //comprar_equipamentos_tronco
-                        fimse
-                        se (evento % 5 = 0) entao
-                           lojinha_reino_oderik //comprar_equipamentos_tronco
-                        fimse
-                        se (evento % 4 = 0) entao
-                           lojinha_reino_jayh   //comprar_equipamentos_pernas_e_pes
-                        fimse
-                        se (evento % 3 = 0) entao
-                           lojinha_reino_oderik //comprar_equipamentos_cabeca
-                        fimse
-                        se (evento % 2 = 0) entao
-                           lojinha_reino_oderik //comprar_equipamentos_cabeca
-                        fimse
-                        se (evento % 1 = 0) entao
-                           lojinha_reino_hira   //Dinero_KAKAKAKAKA
-                        fimse
+                                    escreva  ("                                  Escolha: ")
+                                    leia (string)
+                                    string <- maiusc(string)
 
+                                 ate (string = "1") ou (string = "2") ou (string = "3")
+                                 acao <- caracpnum(string)
+
+                                 escolha acao
+                                    caso 1
+                                       evento <- 3
+                                       lojinha_reino_oderik
+                                    caso 2
+                                       evento <- 5
+                                       lojinha_reino_oderik
+                                    caso 3
+                                       evento <- 4
+                                       lojinha_reino_jayh
+                                 fimescolha
+                              fimse
+                           fimse
+                        fimse
                      caso 2
                         x <- 0
                         conversa_moradores
@@ -18223,17 +18459,21 @@ var
                               se (missao[5] = 0) e (aprimorar_livro[1] = verdadeiro) e (aprimorar_livro[2] = verdadeiro) entao
                                   conversa_moradores_npc05 // HIARA, A BRUXA
                               senao
-                                 se (missao[5] < 1) e (dia >= 21) e (arma_possui[0] = verdadeiro) ou (arma_possui[1] = verdadeiro) ou (arma_possui[2] = verdadeiro) entao
-                                    x <- aleatorizar
-                                    se (x <> x) e (missao[5] = 0) entao
-                                         x <- 0
-                                    senao
-                                         se (arma_usando <> "LIVRO MAGICO BASICO") e (arma_possui[4] = verdadeiro) entao
+                                 se (missao[5] < 1) e (dia >= 21) entao
+                                    se (arma_possui[0] = verdadeiro) ou (arma_possui[1] = verdadeiro) ou (arma_possui[2] = verdadeiro) entao
+                                       x <- aleatorizar
+                                       se (x <> x) e (missao[5] = 0) entao
                                             x <- 0
-                                         senao
-                                            conversa_moradores_npc05 // HIARA, A BRUXA
-                                         fimse
+                                       senao
+                                            se (arma_usando <> "LIVRO MAGICO BASICO") e (arma_possui[4] = verdadeiro) entao
+                                               x <- 0
+                                            senao
+                                               conversa_moradores_npc05 // HIARA, A BRUXA
+                                            fimse
 
+                                       fimse
+                                    senao
+                                       x <- 0
                                     fimse
                                  senao
                                     x <- 0
@@ -22400,6 +22640,421 @@ inicio
       
 fimprocedimento
 
+procedimento castelo
+   inicio
+      local <- 1
+      repita
+
+      // ("|| MN:",mn :4,"  |  EN:",en :4," |")
+      // ("|| AM:",am :4,"  |  DP:",dp :4," |")
+      // ("|| HP:",hp :4,"  |  DN:",dn :4," |")
+         
+         limpatela
+
+         escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
+         escreval ("|| 7 <Inventário>      |################################################ CASTELO||")
+         escreval ("|| 8  < Status >       |########################################################||")
+         escreval ("||- - - - - - - - - - -|__ __ __ __ __ __ __ /|##########|\ __ __ __ __ __ __ __||")
+         escreval ("|| MN:",mn :4,"  |  EN:",en :4," |        ======      | |##########| |      ======        ||")
+         escreval ("||                     |       /    /       | |#/      \#| |       |   _\       ||")
+         escreval ("|| AM:",am :4,"  |  DP:",dp :4," |      |.-._/#       | |/        \| |       #\-´#        ||")
+         escreval ("||                     |                    | |          | |                    ||")
+         escreval ("|| HP:",hp :4,"  |  DN:",dn :4," |__ __ __ __ __ __ __|/            \|__ __ __ __ __ __ __||")
+         escreval ("||- - - - - - - - - - -|                        ________                        ||")
+         escreval ("||                     |                       /        \                       ||")
+         escreval ("||     *Cavaleiro*     |                      |          |                      ||")
+         escreval ("|| _ _ _ _ _ _ _ _ _ _ |                      |          |                      ||")
+         escreval ("|||#|     \     /   |@||_ _ _ _ _ _ _ _ _ _ _ |          | _ _ _ _ _ _ _ _ _ _ _||")
+         escreval ("|||@|   ___\   /___ |#||                      |          |                      ||")
+         escreval ("|||#|     (0)  (0)  |@||                       \ |    | /                       ||")
+         escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
+         escreval ("|||#@\     _ __    /#@|| 'Oh... a entrada do Castelo, estranho o fato de não... ||")
+         escreval ("|||@#@\_         _/#@#|| não haver ninguém aqui por perto. Isso é estranho, mas ||")
+         escreval ("|||#@#@#|       |@#@#@|| tudo bem. Estando tudo bem lá dentro está tranquilo. ' ||")
+         escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+         escreval (" Dia:",dia:3)
+         escreval ("                                 O QUE FAZER?                                     ")
+         escreval ("                       1 <Averiguar dentro dos Limites> | 2 <Vazar>               ")
+         escreval
+
+         escreva  ("                                  Escolha: ")
+
+         // usar duas barras não é permitido //
+
+
+         leia (string)
+
+         string <- maiusc(string)
+
+      ate (string = "1") ou (string = "2") ou (string = "3") ou (string = "7") ou (string = "8") ou (string = "SAIR") ou (string = "S")
+
+      se (string = "SAIR") ou (string = "S") entao
+         limpatela
+
+         andandinho_vindo
+
+         tela_mundo
+      fimse
+
+      acao <- caracpnum(string)
+
+      escolha acao
+
+      caso 1
+         limpatela
+         
+         interior_castelo
+      caso 2
+         limpatela
+
+         andandinho_vindo
+
+         tela_mundo
+      caso 7
+         limpatela
+
+         itens
+
+      caso 8
+         limpatela
+
+         status_explica
+      
+      fimescolha
+
+
+fimprocedimento
+
+procedimento interior_castelo
+var
+   dindin: inteiro
+   string: caracter
+inicio
+   se (adentrou_castelo = falso) entao
+      adentrou_castelo <- verdadeiro
+      limpatela
+      escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
+      escreval ("|  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval ("||                     |                               _\ _ _ _ \    _ _        ||")
+      escreval ("||  ANOM,  O  MALDITO  | 'Ah, eae Cavaleiro...         \ /     \|   \_ _/       ||")
+      escreval ("||- - - - - - - - - - -| você veio aqui... ah. ____---._\|,-^--.|___|   |       ||")
+      escreval ("||      *Diálogo*      |                      `-----/_/-__\_|__/__--|_ _/       ||")
+      escreval ("||- - - - - - - - - - -| Olha...  não há mais     |--|__\ \|\ |/ /_ |  |        ||")
+      escreval ("||                     | ninguém por aqui,  é     |  |  . |----| \#\/ /         ||")
+      escreval ("||     *Cavaleiro*     | isso mesmo, eu matei     |  - /# /  \ \ |#||/          ||")
+      escreval ("|| _ _ _ _ _ _ _ _ _ _ | todos...                 \_ _/#  |  _\| |#|            ||")
+      escreval ("|||#|     __    __  |@||                              |   / -._ \|#|            ||")
+      escreval ("|||@|   _____  ____ |#|| Isso inclui o rei. '         /  / /_  `||#/            ||")
+      escreval ("|||#|    ( 0)  ( 0) |@||                             |  /_ _ _ _\||             ||")
+      escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
+      escreval ("|||#@\      ___    /#@||                                                        ||")
+      escreval ("|||@#@\_         _/#@#|| 'Eu... não... vou ignorar... por hora.  Me explique. ' ||")
+      escreval ("|||#@#@#|       |@#@#@||                                                        ||")
+      escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval
+      escreval
+      escreval
+      escreva ("                         ( Pressione ENTER para continuar )                          ")
+      leia (string)
+      string <- maiusc(string)
+      
+      limpatela
+      escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
+      escreval ("|  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval ("||                     |                                _\ _ _ _ \   _ _        ||")
+      escreval ("||  ANOM,  O  MALDITO  | 'E pensar que... você          \ /     \|  \_ _/       ||")
+      escreval ("||- - - - - - - - - - -| vai esquecer  tudo... ____---.__\|,--^-.___|   |       ||")
+      escreval ("||      *Diálogo*      |                      `-----/_/-__|\__|_/_--|_ _/       ||")
+      escreval ("||- - - - - - - - - - -| Basicamente... o centro  |--|__\ \|\ |/ /_ |  |        ||")
+      escreval ("||                     | da maldição, o causador  |  |  . |----| \#\/ /         ||")
+      escreval ("||     *Cavaleiro*     | desta...  ele está além  |  -  / /  \ \ |#||/          ||")
+      escreval ("|| _ _ _ _ _ _ _ _ _ _ | de nós. E eu...           \_ _/# |  _\| |#|            ||")
+      escreval ("|||#|     __    __  |@||                              |#  / -._ \|#|            ||")
+      escreval ("|||@|   _____  ____ |#|| Obedeço ele. '               /  / /_  `||#/            ||")
+      escreval ("|||#|    ( 0)  ( 0) |@||                             |  /_ _ _ _\||             ||")
+      escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
+      escreval ("|||#@\      ___    /#@||                                                        ||")
+      escreval ("|||@#@\_         _/#@#|| 'Eu... não, não não. Falta coisas... Precisa faltar. ' ||")
+      escreval ("|||#@#@#|       |@#@#@||                                                        ||")
+      escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval
+      escreval
+      escreval
+      escreva ("                         ( Pressione ENTER para continuar )                          ")
+      leia (string)
+      string <- maiusc(string)
+      
+      limpatela
+      escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
+      escreval ("|  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval ("||                     |                               _\ _ _ _ \    _ _        ||")
+      escreval ("||  ANOM,  O  MALDITO  | 'Mas o rei também obecedia... \ /     \|   \_ _/       ||")
+      escreval ("||- - - - - - - - - - -| e todos os outros dos ____---._\|,-^--.|___|   |       ||")
+      escreval ("||      *Diálogo*      | seus foram vítimas   `-----/_/-__\_|__/__--|_ _/       ||")
+      escreval ("||- - - - - - - - - - -| da ganância dele.        |--|__\ \|\ |/ /_ |  |        ||")
+      escreval ("||                     |                          |  |  . |----| \#\/ /         ||")
+      escreval ("||     *Cavaleiro*     | Uma  oportunidade...     |  - /# /  \ \ |#||/          ||")
+      escreval ("|| _ _ _ _ _ _ _ _ _ _ | essa que tive agora,     \_ _/#  |  _\| |#|            ||")
+      escreval ("|||#|     __    __  |@|| nunca mais terei uma         |   / -._ \|#|            ||")
+      escreval ("|||@|   _____  ____ |#|| como tal. Então... '         /  / /_  `||#/            ||")
+      escreval ("|||#|    ( 0)  ( 0) |@||                             |  /_ _ _ _\||             ||")
+      escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
+      escreval ("|||#@\      ___    /#@||                                                        ||")
+      escreval ("|||@#@\_         _/#@#||        'Isso... É tão estranho... Continue... '        ||")
+      escreval ("|||#@#@#|       |@#@#@||                                                        ||")
+      escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval
+      escreval
+      escreval
+      escreva ("                         ( Pressione ENTER para continuar )                          ")
+      leia (string)
+      string <- maiusc(string)
+      
+      limpatela
+      escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
+      escreval ("|  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval ("||                     |                                _\ _ _ _ \   _ _        ||")
+      escreval ("||  ANOM,  O  MALDITO  | 'Nah,  para que dizer          \ /     \|  \_ _/       ||")
+      escreval ("||- - - - - - - - - - -| tanto...              ____---.__\|,--^-.___|   |       ||")
+      escreval ("||      *Diálogo*      |                      `-----/_/-__|\__|_/_--|_ _/       ||")
+      escreval ("||- - - - - - - - - - -| Em certos  lugares a...  |--|__\ \|\ |/ /_ |  |        ||")
+      escreval ("||                     | memória é presa.  Então  |  |  . |----| \#\/ /         ||")
+      escreval ("||     *Cavaleiro*     | nenhum de  nós lembrará  |  -  / /  \ \ |#||/          ||")
+      escreval ("|| _ _ _ _ _ _ _ _ _ _ | disso...                  \_ _/# |  _\| |#|            ||")
+      escreval ("|||#|     __    __  |@||                              |#  / -._ \|#|            ||")
+      escreval ("|||@|   _____  ____ |#|| Mas era necessário. '        /  / /_  `||#/            ||")
+      escreval ("|||#|    ( 0)  ( 0) |@||                             |  /_ _ _ _\||             ||")
+      escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
+      escreval ("|||#@\      ___    /#@||                                                        ||")
+      escreval ("|||@#@\_         _/#@#||   'Estou... sem palavras... nada faz sentido aqui. '   ||")
+      escreval ("|||#@#@#|       |@#@#@||                                                        ||")
+      escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval
+      escreval
+      escreval
+      escreva ("                         ( Pressione ENTER para continuar )                          ")
+      leia (string)
+      string <- maiusc(string)
+      
+      limpatela
+      escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
+      escreval ("|  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval ("||                     |                               _\ _ _ _ \    _ _        ||")
+      escreval ("||  ANOM,  O  MALDITO  | 'Eu sei, agi sem nem          \ /     \|   \_ _/       ||")
+      escreval ("||- - - - - - - - - - -| pensar, por impulso.  ____---._\|,-^--.|___|   |       ||")
+      escreval ("||      *Diálogo*      | Sei bem disso...     `-----/_/-__\_|__/__--|_ _/       ||")
+      escreval ("||- - - - - - - - - - -|                          |--|__\ \|\ |/ /_ |  |        ||")
+      escreval ("||                     | 'Mas ouça, a maldição    |  |  . |----| \#\/ /         ||")
+      escreval ("||     *Cavaleiro*     | está cansando, graças    |  - /# /  \ \ |#||/          ||")
+      escreval ("|| _ _ _ _ _ _ _ _ _ _ | ao seu  esforço,  sei    \_ _/#  |  _\| |#|            ||")
+      escreval ("|||#|     __    __  |@|| que... se alguém pode        |   / -._ \|#|            ||")
+      escreval ("|||@|   _____  ____ |#|| vencer...  é  você. '        /  / /_  `||#/            ||")
+      escreval ("|||#|    ( 0)  ( 0) |@||                             |  /_ _ _ _\||             ||")
+      escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
+      escreval ("|||#@\      ___    /#@||                                                        ||")
+      escreval ("|||@#@\_         _/#@#||                        ' ... '                         ||")
+      escreval ("|||#@#@#|       |@#@#@||                                                        ||")
+      escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval
+      escreval
+      escreval
+      escreva ("                         ( Pressione ENTER para continuar )                          ")
+      leia (string)
+      string <- maiusc(string)
+      
+      limpatela
+      escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
+      escreval ("|  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval ("||                     |                               _\ _ _ _ \    _ _        ||")
+      escreval ("||  ANOM,  O  MALDITO  | 'Matei o rei e os nobres...   \ /     \|   \_ _/       ||")
+      escreval ("||- - - - - - - - - - -| isso permitirá que você __---._\|,-^--.|___|   |       ||")
+      escreval ("||      *Diálogo*      | vá até a  Montanha,  `-----/_/-__\_|__/__--|_ _/       ||")
+      escreval ("||- - - - - - - - - - -| lá haverá o ápice antes  |--|__\ \|\ |/ /_ |  |        ||")
+      escreval ("||                     | centro de tudo... '      |  |  . |----| \#\/ /         ||")
+      escreval ("||     *Cavaleiro*     |                          |  - /# /  \ \ |#||/          ||")
+      escreval ("|| _ _ _ _ _ _ _ _ _ _ |                          \_ _/#  |  _\| |#|            ||")
+      escreval ("|||#|     __    __  |@|| 'Após ele, você  poderá      |   / -._ \|#|            ||")
+      escreval ("|||@|   _____  ____ |#|| enfrentar finalmente...      /  / /_  `||#/            ||")
+      escreval ("|||#|    ( 0)  ( 0) |@||                             |  /_ _ _ _\||             ||")
+      escreval ("|||@|         >     |#||- - - - - - - - - - -    AQUILO   - - - - - - - - - - - ||")
+      escreval ("|||#@\      ___    /#@||                                                        ||")
+      escreval ("|||@#@\_         _/#@#||                        ' ... '                         ||")
+      escreval ("|||#@#@#|       |@#@#@||                                                        ||")
+      escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval
+      escreval
+      escreval
+      escreva ("                         ( Pressione ENTER para continuar )                          ")
+      leia (string)
+      string <- maiusc(string)
+      
+      limpatela
+      escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
+      escreval ("|  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval ("||                     |                                _\ _ _ _ \   _ _        ||")
+      escreval ("||  ANOM,  O  MALDITO  | 'É... sinto que o              \ /     \|  \_ _/       ||")
+      escreval ("||- - - - - - - - - - -| tempo  acabou.  '     ____---.__\|,--^-.___|   |       ||")
+      escreval ("||      *Diálogo*      |                      `-----/_/-__|\__|_/_--|_ _/       ||")
+      escreval ("||- - - - - - - - - - -| Preciso  voltar  para a  |--|__\ \|\ |/ /_ |  |        ||")
+      escreval ("||                     | caverna,  antes que ela  |  |  . |----| \#\/ /         ||")
+      escreval ("||     *Cavaleiro*     | sinta  novamente  minha  |  -  / /  \ \ |#||/          ||")
+      escreval ("|| _ _ _ _ _ _ _ _ _ _ | ausência...               \_ _/# |  _\| |#|            ||")
+      escreval ("|||#|               |@|| Lembre ao menos de ir até    |#  / -._ \|#|            ||")
+      escreval ("|||@|     --    --  |#|| a Montanha... '              /  / /_  `||#/            ||")
+      escreval ("|||#|   -----  ---- |@||                             |  /_ _ _ _\||             ||")
+      escreval ("|||@|         >     |#||- - - - - - - - - - Bravo Cavaleiro - - - - - - - - - - ||")
+      escreval ("|||#@\      ___    /#@||                                                        ||")
+      escreval ("|||@#@\_         _/#@#|| '*Respira*... Espero atender... caro amigo. *Respira*' ||")
+      escreval ("|||#@#@#|       |@#@#@||                                                        ||")
+      escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+      escreval ("  MONTANHA LIBERADA (DEMO ACABADA, NADA ALÉM DAQUI)")
+      escreval
+      escreval
+      escreva ("                         ( Pressione ENTER para continuar )                          ")
+      leia (string)
+      string <- maiusc(string)
+      limpatela
+      locais_liberados[6] <- verdadeiro
+      andandinho_vindo
+
+      tela_mundo
+   senao
+   
+      horas <- horas + 1
+      se (horas >= 1) entao
+          dia <- dia + 1
+          horas <- 0
+          se (barganha <> 0) entao
+              prazo_barganha <- prazo_barganha - 1
+          fimse
+      fimse
+
+      dindin <- randi(11) + 10
+      grana <- grana + dindin
+      limpatela
+
+      boa_sorte
+      // ("|| MN:",mn :4,"  |  EN:",en :4," |")
+      // ("|| AM:",am :4,"  |  DP:",dp :4," |")
+      // ("|| HP:",hp :4,"  |  DN:",dn :4," |")
+
+      repita
+         limpatela
+         escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
+         escreval ("|| X <Inventário>      |                                                        ||")
+         escreval ("|| X  < Status >       |                                                        ||")
+         escreval ("||- - - - - - - - - - -|       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _                  ||")
+         escreval ("|| MN:",mn :4,"  |  EN:",en :4," |      |                               |                 ||")
+         escreval ("||                     |      |  #### ####   ###  #   #  ###  |\                ||")
+         escreval ("|| AM:",am :4,"  |  DP:",dp :4," |      | #     #   # #   # ##  # #   # ||\_              ||")
+         escreval ("||                     |      | # ### ####  ##### # # # ##### ||| |             ||")
+         escreval ("|| HP:",hp :4,"  |  DN:",dn :4," |      | #   # #  #  #   # #  ## #   # ||| | GRANA: +",dindin :2,"  ||")
+         escreval ("||- - - - - - - - - - -|      |  ###  #   # #   # #   # #   # ||| |             ||")
+         escreval ("||                     |      |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _||| |             ||")
+         escreval ("||     *Cavaleiro*     |       \_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|| |             ||")
+         escreval ("|| _ _ _ _ _ _ _ _ _ _ |       |__ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _| |             ||")
+         escreval ("|||#|     __    __  |@||          |_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _|             ||")
+         escreval ("|||@|   _____  ____ |#||                                                        ||")
+         escreval ("|||#|    ( 0)  ( 0) |@||                                                        ||")
+         escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
+         escreval ("|||#@\     _ __    /#@|| 'Que estranho,  desde a entrada até o interior...  não ||")
+         escreval ("|||@#@\_         _/#@#|| tem ninguém por aqui,  parece que até nem tem mobílias ||")
+         escreval ("|||#@#@#|       |@#@#@|| no castelo. Bem, mas pelo menos achei grana. ( T v T ) ||")
+         escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+
+         escreval (" Dia:",dia:3,"                                                                Grana:",grana :3)
+
+         escreval ("                        CONTINUAR OU SAIR DO CASTELO?                             ")
+         escreval ("                           1 <Voltar> | 2 <Ficar>                                 ")
+         escreval
+         escreva  ("                                  Escolha: ")
+
+         leia (string)
+
+      ate (string = "1") ou (string = "2")
+      
+      acao <- caracpnum(string)
+      
+      escolha acao
+      
+         caso 1
+            limpatela
+
+            andandinho_vindo
+
+            tela_mundo
+         caso 2
+            limpatela
+
+            andandinho_indo
+         
+            interior_castelo
+      fimescolha
+   fimse
+fimprocedimento
+
+procedimento entrada_montanha
+var
+
+inicio
+         repita
+            limpatela
+      // ("|| MN:",mn :4,"  |  EN:",en :4," |")
+      // ("|| AM:",am :4,"  |  DP:",dp :4," |")
+      // ("|| HP:",hp :4,"  |  DN:",dn :4," |")
+            escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
+            escreval ("|| 7 <Inventário>      |                                                MONTANHA||")
+            escreval ("|| 8  < Status >       |                                                        ||")
+            escreval ("||- - - - - - - - - - -|                                                        ||")
+            escreval ("|| MN:                 |                                                        ||")
+            escreval ("||                     |                                                        ||")
+            escreval ("|| AM:                 |                                                        ||")
+            escreval ("||                     |                                                        ||")
+            escreval ("|| HP:                 |                                                        ||")
+            escreval ("||- - - - - - - - - - -|                                                        ||")
+            escreval ("||                     |                                                        ||")
+            escreval ("||     *Cavaleiro*     |     _ _ _ _ _ _                                        ||")
+            escreval ("|| _ _ _ _ _ _ _ _ _ _ |    /           \                                       ||")
+            escreval ("|||#|     \     /   |@||   |             |                                      ||")
+            escreval ("|||@|   ___\   /___ |#||   |             |                                      ||")
+            escreval ("|||#|     (0)  (0)  |@||   |             |                                      ||")
+            escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
+            escreval ("|||#@\     _ __    /#@||   Em meio à floresta, encontra uma criatura observando ||")
+            escreval ("|||@#@\_         _/#@#|| de longe,  aparentemente  a  mesma  é  lenta  e  pouco ||")
+            escreval ("|||#@#@#|       |@#@#@|| ameaçadora.                                            ||")
+            escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+            escreval (" Dia:",dia:3)
+            escreval ("                                 O QUE FAZER?                                     ")
+            escreval ("                    1 <Ignorar> | 2 <Abrir> | 3 <Destruir>                        ")
+            escreval
+
+            escreva  ("                                  Escolha: ")
+
+            // usar duas barras não é permitido //
+
+            leia (string)
+
+         ate (string = "1") ou (string = "2") ou (string = "3") ou (string = "7") ou (string = "8")
+
+         acao <- caracpnum(string)
+
+         escolha acao
+fimprocedimento
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+procedimento finalPadrao
+   inicio
+
+fimprocedimento
+
+procedimento finalVerdadeiro
+   inicio
+
+fimprocedimento
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
                   // |
                   // |
                   // V .
@@ -22510,6 +23165,8 @@ fimprocedimento
                   fimpara
                   correntes <- falso
                   
+                  //arma_possui[3] <- verdadeiro   Excluir
+                  
                   para x de 0 ate 7 faca
                      equipamento_cabeca_possui[x] <- falso
                   fimpara
@@ -22542,9 +23199,11 @@ fimprocedimento
                   locais_liberados[5] <- falso
                   locais_liberados[6] <- falso
                   
+                  adentrou_castelo <- falso
+                  
                   primeiro_encontro_anom <- falso
                   paredes <- 0
-                  
+
                   possui_quase_mapa_caverna <- falso
                   possui_mapa_caverna <- falso
                   molde_pistola <- falso
@@ -22585,11 +23244,12 @@ fimprocedimento
                   //venceu_barganha <- verdadeiro
                   /////////////////////////////////
                   limpatela
-                  
+
+
                   se (dia = 0) entao
                      tutorial
                   fimse
-                  
+                  interior_castelo
                   tela_mundo
 
                fimalgoritmo
