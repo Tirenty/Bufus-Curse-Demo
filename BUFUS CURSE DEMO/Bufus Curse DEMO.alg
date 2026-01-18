@@ -1042,11 +1042,20 @@ var
                fimse
                escreval
                escreval ("                                    O QUE FAZER?                                  ")
-               escreval ("        1 < Deixar um agrado para ele >  |  ENTER < Sair sem agrado >             ")
+               
+               se (consumivel_quanti[0] > 0) ou (consumivel_quanti[4] > 0) ou (consumivel_quanti[1] > 0) entao
+                  escreval ("        1 < Deixar um agrado para ele >  |  ENTER < Sair sem agrado >             ")
+               senao
+                  escreval ("                           ENTER < Sair sem agrado >             ")
+               fimse
                escreval
 
                escreva  ("                                  Escolha: ")
                leia (string)
+               
+               se (consumivel_quanti[0] < 1) e (consumivel_quanti[4] < 1) e (consumivel_quanti[1] < 1) entao
+                  string <- " "
+               fimse
                
                se (string = "1") entao
                      escreval
@@ -18335,8 +18344,6 @@ var
                      aleatorizar, completados, em_progresso, total: inteiro
                      disponivel: logico
                   inicio
-                  
-                     primeira_compra_JAYH <- verdadeiro // Excluir
                   
                      em_progresso <- 0
                      completados <- 0
