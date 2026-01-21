@@ -8836,6 +8836,9 @@ var
                      escreval ("|||#@#@#|       |@#@#@|| palavras. Faz sentir que... sou  de  fato  especial. ' ||")
                      escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
                   senao
+                  
+
+                     
                      se (comprou = falso) entao
                         se (conversou = falso) entao
                            escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
@@ -8970,7 +8973,46 @@ var
                            fimse
                      FIMSE
                      
-                     SE (cristal > 0) E (cristal < 20) entao
+                     SE (consumivel_quanti[1] > 39) E (consumivel_quanti[3] > 39) E (pedrorja > 0) E (arma_possui[3] = falso) E (missao[6] = 0) ENTAO
+                        missao[6] <- 1
+                        consumivel_quanti[1] <- consumivel_quanti[1] - 40
+                        consumivel_quanti[3] <- consumivel_quanti[3] - 40
+                        pedrorja <- pedrorja - 1
+                        arma_possui[3] <- verdadeiro
+                        limpatela
+                        escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
+                        escreval ("|  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+                        escreval ("||                     |                                   . ´` /| ´` .         ||")
+                        escreval ("||   ANOM, O QUÍMICO   | 'Oh, você realmente conseguiu,   /|/ |/ |/ |/|__       ||")
+                        escreval ("||- - - - - - - - - - -| ein... Parabéns. Farei a arma,  /              /       ||")
+                        escreval ("||      *Diálogo*      | como combinamos. '              |.^^^^^^^^^^. /        ||")
+                        escreval ("||- - - - - - - - - - -|                                 \|___\  /___| |        ||")
+                        escreval ("||                     |                                  |_O_.-._O_/|/         ||")
+                        escreval ("||     *Cavaleiro*     |     * Passam-se 2 horas *        |/_\ | /_\/|          ||")
+                        escreval ("|| _ _ _ _ _ _ _ _ _ _ |                                  _\_/_|_\_/|____       ||")
+                        escreval ("|||$|     \     /   |$||                                  \ \|\  / |/   /       ||")
+                        escreval ("|||&|   ___\   /___ |&|| 'Aqui está, faça um bom uso. '   /\ \-__-´/ __/        ||")
+                        escreval ("|||$|   ( 0 ) ( 0 ) |$||                                  | | |  `|    \        ||")
+                        escreval ("|||&|         >     |&||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
+                        escreval ("|||$&\   _______   /&$|| 'HEHEHEHE, olha essa belezinha em minhas mãos. Segurar ||")
+                        escreval ("|||&$&\_ \|_|_|/ _/&$&|| ela parece até me deixar brisado.  ADOREI ISSO AQUI! ' ||")
+                        escreval ("|||$&$&$|       |$&$&$|| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _||")
+                        escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
+                        escreval (" < +1 KATANA DE SANGUE >                                                       ")
+                        escreval
+                        escreval ("            ( Pressione ENTER para continuar e SAIR ou S para parar. )            ")
+                        escreval
+                        escreva  ("                                   Escolha: ")
+                        leia (string)
+                        string <- maiusc(string)
+                        
+                        se (string = "S") ou (string = "SAIR") entao
+                            lojinha_caverna_anom
+                        fimse
+                     FIMSE
+                     
+                     SE (cristal > 0) E (cristal < 20) E (molde_pistola = falso)entao
+                        molde_pistola <- verdadeiro
                         limpatela
                         escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
                         escreval ("|  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
@@ -9049,7 +9091,7 @@ var
                         escreval ("|||$&$&$|       |$&$&$||                                                        ||")
                         escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
                         escreval ("")
-                        molde_pistola <- verdadeiro
+
                         escreval ("                        ( Pressione ENTER para continuar )                        ")
                         escreval
                         escreva  ("                                   Escolha: ")
@@ -9224,15 +9266,15 @@ var
                         escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
                         escreval ("|  Para sair, digite 'SAIR' ou 'S' _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
                         escreval ("||                     |                                   . ´` /| ´` .         ||")
-                        escreval ("||   ANOM, O QUÍMICO   |                                  /|/ |/ |/ |/|__       ||")
-                        escreval ("||- - - - - - - - - - -|  'Ei,  uma dica para você.      /              /       ||")
-                        escreval ("||      *Diálogo*      |  Você  sabia que  dá  para      |.^^^^^^^^^^. /        ||")
-                        escreval ("||- - - - - - - - - - -|  fazer  uma  espada  muito      \|___\`´/___| |        ||")
-                        escreval ("||                     |  poderosa só com Musgarmim       |_O_.-._O_/|/         ||")
-                        escreval ("||     *Cavaleiro*     |  e Cogumalaco? '                 |/_\ | /_\/|          ||")
-                        escreval ("|| _ _ _ _ _ _ _ _ _ _ |                                  _\_/_|_\_/|____       ||")
-                        escreval ("|||#|     \     /   |@||  'Cerca  de  40  de  cada. Se    \ \|\  / |/   /       ||")
-                        escreval ("|||@|   ___\   /___ |#||  conseguir, faço para você. '    /\ \-__-´/ __/        ||")
+                        escreval ("||   ANOM, O QUÍMICO   |  'Ei,  uma dica para você.       /|/ |/ |/ |/|__       ||")
+                        escreval ("||- - - - - - - - - - -|  Você  sabia que  dá  para      /              /       ||")
+                        escreval ("||      *Diálogo*      |  fazer  uma  espada  muito      |.^^^^^^^^^^. /        ||")
+                        escreval ("||- - - - - - - - - - -|  poderosa só com MUSGARMIM      \|___\`´/___| |        ||")
+                        escreval ("||                     |  e COGUMALACO? '                 |_O_.-._O_/|/         ||")
+                        escreval ("||     *Cavaleiro*     |                                  |/_\ | /_\/|          ||")
+                        escreval ("|| _ _ _ _ _ _ _ _ _ _ |  'Cerca  de  40  de  cada e uma  _\_/_|_\_/|____       ||")
+                        escreval ("|||#|     \     /   |@||  Pedrorja.  Se conseguir,  faço  \ \|\  / |/   /       ||")
+                        escreval ("|||@|   ___\   /___ |#||  para você. '                    /\ \-__-´/ __/        ||")
                         escreval ("|||#|     (0)  (0)  |@||                                  | | |  `|    \        ||")
                         escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
                         escreval ("|||#@\     _ __    /#@|| 'Interessante... não deve ser muito fácil mas...  quem ||")
@@ -9245,7 +9287,7 @@ var
                         escreva  ("                                   Escolha: ")
                         leia (string)
                         string <- maiusc(string)
-
+                        missao[6] <- 0
                         se (string = "S") ou (string = "SAIR") entao
                             lojinha_caverna_anom
                         fimse
@@ -10037,7 +10079,7 @@ var
             inicio
             
             
-               se (paredes < 7) e (intankalis = verdadeiro) e (imoralis = verdadeiro) entao
+               se (paredes < 7) e (intankalis = verdadeiro) e (imoralis = verdadeiro) e (possui_quase_mapa_caverna = verdadeiro) entao
                   paredes <- 7
                fimse
                
@@ -15406,7 +15448,7 @@ var
                         aprimorar_livro[1] <- verdadeiro
                      fimse
 
-                     se (paredes <> 1) e (paredes < 3) entao
+                     se (paredes <> 0) e (paredes < 3) entao
                         paredes <- paredes + 2
                      fimse
 
@@ -15446,21 +15488,21 @@ var
                            fimse
                         caso 7
                            se(paredes >= 7) entao
-                              escreval (" ITENS RECEBIDOS:  +1 Cristal     ")
+                              escreval (" ITENS RECEBIDOS:  +1 Curstal     ")
                               cristal <- cristal + 1
                            senao
                               escreval (" ITENS RECEBIDOS:  Nenhum     ")
                            fimse
                         caso 8
                            se(paredes >= 7) entao
-                              escreval (" ITENS RECEBIDOS:  +2 Cristal     ")
+                              escreval (" ITENS RECEBIDOS:  +2 Curstal     ")
                               cristal <- cristal + 2
                            senao
                               escreval (" ITENS RECEBIDOS:  Nenhum     ")
                            fimse
                         caso 9
                            se(paredes >= 7) entao
-                              escreval (" ITENS RECEBIDOS:  +3 Cristal     ")
+                              escreval (" ITENS RECEBIDOS:  +3 Curstal     ")
                               cristal <- cristal + 3
                            senao
                               escreval (" ITENS RECEBIDOS:  Nenhum     ")
@@ -15549,7 +15591,7 @@ var
                         aprimorar_livro[2] <- verdadeiro
                      fimse
 
-                     se (paredes <> 1) e (paredes < 3) entao
+                     se (paredes <> 0) e (paredes < 3) entao
                         paredes <- paredes + 2
                      fimse
 
@@ -15589,21 +15631,21 @@ var
                            fimse
                         caso 7
                            se(paredes >= 7) entao
-                              escreval (" ITENS RECEBIDOS:  +1 Cristal     ")
+                              escreval (" ITENS RECEBIDOS:  +1 Curstal     ")
                               cristal <- cristal + 1
                            senao
                               escreval (" ITENS RECEBIDOS:  Nenhum     ")
                            fimse
                         caso 8
                            se(paredes >= 7) entao
-                              escreval (" ITENS RECEBIDOS:  +2 Cristal     ")
+                              escreval (" ITENS RECEBIDOS:  +2 Curstal     ")
                               cristal <- cristal + 2
                            senao
                               escreval (" ITENS RECEBIDOS:  Nenhum     ")
                            fimse
                         caso 9
                            se(paredes >= 7) entao
-                              escreval (" ITENS RECEBIDOS:  +3 Cristal     ")
+                              escreval (" ITENS RECEBIDOS:  +3 Curstal     ")
                               cristal <- cristal + 3
                            senao
                               escreval (" ITENS RECEBIDOS:  Nenhum     ")
@@ -21725,6 +21767,16 @@ var
                            escreval
                         fimse
 
+                        se (missao[6] = 0) entao
+                           escreval ("   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ")
+                           escreval (" /   A arma de  | Quem diria que é  possível  um  químico  saber fazer algum \ ")
+                           escreval ("|    um amigo   | tipo de arma só com Plantas, por assim dizer.  Claro, e de  |")
+                           escreval (" \    Químico   | uma pedrorja. Precisa-se 40 Cogumalacos e Musgarmim.       / ")
+                           escreval ("   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ")
+                           escreval
+                        fimse
+
+
                         //se (missao[x] = 0) entao
                         //   escreval ("   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ")
                         //   escreval (" /              |                                                            \ ")
@@ -21822,6 +21874,16 @@ var
                                  escreval ("   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ")
                                  escreval
                               fimse
+                              
+                              se (missao[6] = 1) entao
+                                 escreval ("   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ")
+                                 escreval (" /   A arma de  | Quem diria que é  possível  um  químico  saber fazer algum \ ")
+                                 escreval ("|    um amigo   | tipo de arma só com Plantas, por assim dizer.  Claro, e de  |")
+                                 escreval (" \    Químico   | uma pedrorja. Precisa-se 40 Cogumalacos e Musgarmim.       / ")
+                                 escreval ("   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ")
+                                 escreval
+                              fimse
+                              
                               //se (missao[x] = 0) entao
                               //   escreval ("   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   ")
                               //   escreval (" /              |                                                            \ ")
@@ -23218,8 +23280,6 @@ fimprocedimento
                   fimpara
                   correntes <- falso
                   
-                  //arma_possui[3] <- verdadeiro   Excluir
-                  
                   para x de 0 ate 7 faca
                      equipamento_cabeca_possui[x] <- falso
                   fimpara
@@ -23270,8 +23330,7 @@ fimprocedimento
                   prazo_assombralis <- 14
                   
                   //golpes_nat <- 2222
-                  
-                  
+
                   //missao[0] = X
                   //missao[1] = X
                   //missao[2] = X
@@ -23297,7 +23356,6 @@ fimprocedimento
                   //venceu_barganha <- verdadeiro
                   /////////////////////////////////
                   limpatela
-
 
                   se (dia = 0) entao
                      tutorial
