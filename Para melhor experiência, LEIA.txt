@@ -1,0 +1,13 @@
+Quando for jogar, deve acessar o visualgv25 Portable e abrir neste o
+Bufus Curse DEMO. Após, com o jogo no programa, aperte F9 para começar.
+
+Para melhorar a experiência, pode reduzir o tamanho do programa e
+colocá-lo atrás da tela do jogo. Isto evita de ver o código fonte
+enquanto estiver jogando.
+
+Caso queira desligar o som ao apertar ENTER, deve-se retirar os sons
+de notificações do PC:
+
+Na aba Configurações - Volume do app e preferências do dispositivo.
+Basta zerar o Sons do sistema e... ao encerrar o jogo, volta-lo ao
+padrão desejado.
