@@ -13666,7 +13666,7 @@ var
                            senao
                               escreval ("  2 <Fraqueza> (Dp: 25%)(-4 Mn)(-10% Dn Inimigo) 'Afeta no máximo 5 vezes'         ")
                            fimse
-                           
+
                            escreval
                            escreva  (" S <Voltar>                          Escolha: ")
                            leia (string)
@@ -13703,11 +13703,11 @@ var
                            en <- en - 4
 
                            danorecebido <- danorecebido * (1 - 2)
-                           
+
                            agiu <- verdadeiro
 
                            ini_sangrando
-                           
+
                            aleator <- randi(10)
 
                            escolha aleator
@@ -13733,11 +13733,11 @@ var
                               limpatela
 
                               emocao_batalha
-                              
+
                               agiu <- verdadeiro
                               primeiro_turno <- falso
                               disparo <- verdadeiro
-                              
+
                               danorecebido <- dp * 0.25
 
                               se (euforico = verdadeiro) entao
@@ -13755,13 +13755,13 @@ var
 
 
                               ini_sangrando
-   
+
                               // Fraqueza ///////////
                               se (dnini > dninimax * 0.5) entao
                                  dnini <- dnini - dninimax * 0.1
                               fimse
                               ///////////////////////
-                              
+
                               //Ataque////////
                               ac_combate <- 1
                               ///////////////
@@ -13786,7 +13786,11 @@ var
 
                            escreval ("                                    O QUE FAZER?                                  ")
                            escreval ("  X <Cabeçada> (Alvo já atordoado) 'Golpe com chance de atordoar o alvo'          ")
-                           escreval ("  2 <Nada>                                                                        ")
+                           se (golpes_nat <> 4444) entao
+                              escreval ("  2 <Nada>                                                                        ")
+                           senao
+                              escreval ("  2 <Fraqueza> (Dp: 25%)(-4 Mn)(-10% Dn Inimigo) 'Afeta no máximo 5 vezes'         ")
+                           fimse
                            escreval
 
                            escreva  (" S <Voltar>                          Escolha: ")
@@ -13803,9 +13807,49 @@ var
                         acao <- caracpnum(string)
 
                         escolha acao
-                        
+
                         caso 2
-                        
+                           se (golpes_nat <> 4444) ou (mn < 4) entao
+                              golpes_condicoes
+                           senao
+                              limpatela
+
+                              emocao_batalha
+
+                              agiu <- verdadeiro
+                              primeiro_turno <- falso
+                              disparo <- verdadeiro
+
+                              danorecebido <- dp * 0.25
+
+                              se (euforico = verdadeiro) entao
+                                 danorecebido <- danorecebido * 1.3
+                              fimse
+                              se (cansado = verdadeiro) entao
+                                 danorecebido <- danorecebido * 0.8
+                              fimse
+
+                              hpini <- hpini - danorecebido
+                              mn <- mn - 4
+
+                              danorecebido <- danorecebido * (1 - 2)
+
+                              ini_sangrando
+
+                              // Fraqueza ///////////
+                              se (dnini > dninimax * 0.5) entao
+                                 dnini <- dnini - dninimax * 0.1
+                              fimse
+                              ///////////////////////
+
+                              //Ataque////////
+                              ac_combate <- 1
+                              ///////////////
+                              acao_ant_player <- numpcarac(ac_combate)
+
+                              combate_atual
+
+                              fimse
                         caso 9
                            limpatela
                            combate_atual
@@ -18224,41 +18268,43 @@ var
                            fimse
                         ate (evento < 8)
                         ////////////////////////////////
-                        limpatela
-                        se (locais_liberados[2] = falso) entao
-                           se (evento % 7 = 0) entao
+
+                        se (locais_liberados[1] = falso) entao
+                           limpatela
+                           se (evento = 7) entao
                               ferreiro_reino_suens //aprimorar_equipamentos
                            fimse
-                           se (evento % 6 = 0) entao
+                           se (evento = 6) entao
                               lojinha_reino_oderik //comprar_equipamentos_tronco
                            fimse
-                           se (evento % 5 = 0) entao
+                           se (evento = 5) entao
                               lojinha_reino_oderik //comprar_equipamentos_tronco
                            fimse
-                           se (evento % 4 = 0) entao
+                           se (evento = 4) entao
                               lojinha_reino_jayh   //comprar_equipamentos_pernas_e_pes
                            fimse
-                           se (evento % 3 = 0) entao
+                           se (evento = 3) entao
                               lojinha_reino_oderik //comprar_equipamentos_cabeca
                            fimse
-                           se (evento % 2 = 0) entao
+                           se (evento = 2) entao
                               lojinha_reino_oderik //comprar_equipamentos_cabeca
                            fimse
-                           se (evento % 1 = 0) entao
+                           se (evento = 1) entao
                               lojinha_reino_hira   //Dinero_KAKAKAKAKA
                            fimse
                         senao
-                           se (evento % 1 = 0) entao
+                           se (evento = 1) entao
                               lojinha_reino_hira   //Dinero_KAKAKAKAKA
                            senao
-                              se (evento % 7 = 0) entao
+                              se (evento = 7) entao
                                  ferreiro_reino_suens //aprimorar_equipamentos
                               senao
                                  repita
+                                    escreval
                                     escreval ("                                ESCOLHA LOJINHA                                   ")
+                                    escreval
                                     escreval ("  1 <Equipamentos Cabeça> | 2 <Equipamentos Tronco> | 3 <Equipamentos Pernas/Pés> ")
                                     escreval
-
                                     escreva  ("                                  Escolha: ")
                                     leia (string)
                                     string <- maiusc(string)
@@ -20157,10 +20203,10 @@ var
                            limpatela
                            item_comprado_nome <- ""
 
-                           se (evento % 6 = 0) ou (evento % 5 = 0) entao
-                              comprar_equipamentos_tronco
+                           se (evento = 6) ou (evento = 5) entao
+                              comprar_equipamentos_tronco(descontinho)
                            senao
-                              comprar_equipamentos_cabeca
+                              comprar_equipamentos_cabeca(descontinho)
                            fimse
                         caso 2
                            repita
@@ -23199,7 +23245,7 @@ fimprocedimento
                      consumivel_descri[x] <- falso
                   fimpara
                   
-                  locais_liberados[1] <- falso
+                  locais_liberados[1] <- verdadeiro
                   locais_liberados[2] <- verdadeiro
                   locais_liberados[3] <- verdadeiro
                   locais_liberados[4] <- falso
@@ -23256,7 +23302,7 @@ fimprocedimento
                   se (dia = 0) entao
                      tutorial
                   fimse
-                  interior_castelo
+
                   tela_mundo
 
                fimalgoritmo
