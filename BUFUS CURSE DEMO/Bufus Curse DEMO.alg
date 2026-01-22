@@ -39,6 +39,7 @@ var
 
    grana, gan_grana, per_grana: inteiro
 
+   sub_classe: caracter
    //golpes_nat = 0 caso seja o padrão
    //golpes_condi = 0 caso seja o padrão
 
@@ -13380,9 +13381,9 @@ var
                      escreval
                      escreval ("                                    O QUE FAZER?                                  ")
                      se (hp > 5) entao
-                        escreval ("             1 <Corte> (Dn: 100%)(-3 En) | 2 <Imolar> (Dn: 200%)(-3 En)(-5 Hp)    ")
+                        escreval ("       1 <Corte> (Dn: 100%)(-3 En) | 2 <Imolar> (Dn: 200%)(-3 En)(-1 Mn)(-5 Hp)    ")
                      senao
-                        escreval ("             1 <Corte> (Dn: 100%)(-3 En) | X <Imolar> (Dn: 200%)(-3 En)(-5 Hp)    ")
+                        escreval ("       1 <Corte> (Dn: 100%)(-3 En) | X <Imolar> (Dn: 200%)(-3 En)(-1 Mn)(-5 Hp)    ")
                      fimse
                      escreval ("                          (Golpes Curam e causam Sangramento)                     ")
                      escreval ("                                                         3 <Golpes com Condições> ")
@@ -13455,6 +13456,7 @@ var
                      agiu <- verdadeiro
 
                      en <- en - 3
+                     mn <- mn - 1
                      hp <- hp - 5
                      danorecebido <- int(dn * 2)
 
@@ -15873,7 +15875,7 @@ var
                         index_equipar[3] <- index
                         escreval ("/                 | <Corte> (Dn: 100%)(-3 En)     <Imolar>    |               \")
                         escreval ("|   K A T A N A   +-------------------------+(Dn: 200%)(-3 En)|               |")
-                        escreval ("|                 |<Agilidade>(+3 Am)(+7 En)|     (-5 Hp)     |    EQUIPAR    |")
+                        escreval ("|                 |<Agilidade>(+3 Am)(+7 En)| (-1 Mn) (-5 Hp) |    EQUIPAR    |")
                         escreval ("|       D O       +-------------------------------------------+               |")
                         escreval ("|                 | PASSIVA: Em combates sempre está Eufórico |   < '",index," ' >   |")
                         escreval ("|   S A N G U E   | PASSIVA: Golpes sempre causam Sangramento |               |")
@@ -16456,10 +16458,213 @@ var
 
                   fimprocedimento
 
+
+                  procedimento subclasse_atual
+                  inicio
+
+                      ESCOLHA sub_classe
+                      
+                         CASO "MEDIEVAL"
+                            hp <- hp - 4
+                            am <- am - 10
+                            dn <- dn - 2
+                            
+                            hpmax <- hpmax - 4
+                            ammax <- ammax - 10
+                            dnmax <- dnmax - 2
+                            
+                         CASO "BRUXO"
+                         
+                            en <- en - 3
+                            mn <- mn - 4
+                            dp <- dp - 8
+                            
+                            enmax <- enmax - 3
+                            mnmax <- mnmax - 4
+                            dpmax <- dpmax - 8
+                            
+                         CASO "SAMURAI"
+                         
+                            am <- am - 2
+                            en <- en - 6
+                            dn <- dn - 4
+
+                            ammax <- ammax - 2
+                            enmax <- enmax - 6
+                            dnmax <- dnmax - 4
+                            
+                         CASO "SOLDADO"
+                         
+                            hp <- hp - 12
+                            en <- en - 4
+                            dn <- dn - 4
+
+                            hpmax <- hpmax - 12
+                            enmax <- enmax - 4
+                            dnmax <- dnmax - 4
+
+                         CASO "ORIGINAL"
+                         
+                            hp <- hp - 3
+                            am <- am - 3
+                            en <- en - 3
+                            mn <- mn - 3
+                            dn <- dn - 3
+                            dp <- dp - 3
+                            
+                            hpmax <- hpmax - 3
+                            ammax <- ammax - 3
+                            enmax <- enmax - 3
+                            mnmax <- mnmax - 3
+                            dnmax <- dnmax - 3
+                            dpmax <- dpmax - 3
+                            
+                         CASO "SOCIAL"
+                         
+                            am <- am - 2
+                            en <- en - 2
+                            dp <- dp - 8
+                            
+                            ammax <- ammax - 2
+                            enmax <- enmax - 2
+                            dpmax <- dpmax - 8
+                            
+                      FIMESCOLHA
+                      
+                      sub_classe <- "Nenhum"
+                      
+                      SE (equipamento_cabeca_usando = "ELMO") ou (equipamento_cabeca_usando = "GLADIADOR") ENTAO
+                          SE (equipamento_tronco_usando = "ARMADURA") ENTAO
+                              SE (equipamento_pernas_usando = "GREVAS") ENTAO
+                                  SE (equipamento_pes_usando = "ESCARPE") ENTAO
+                                     
+                                     sub_classe <- "MEDIEVAL"
+                                     
+                                     hp <- hp + 4
+                                     am <- am + 10
+                                     dn <- dn + 2
+                                     
+                                     hpmax <- hpmax + 4
+                                     ammax <- ammax + 10
+                                     dnmax <- dnmax + 2
+                                     
+                                  FIMSE
+                              FIMSE
+                          FIMSE
+                      FIMSE
+                      
+                      SE (equipamento_cabeca_usando = "BRUXO") ENTAO
+                          SE (equipamento_tronco_usando = "CAPA") ou (equipamento_tronco_usando = "MANTO") ENTAO
+                              SE (equipamento_pernas_usando = "CALÇA") ENTAO
+                                  SE (equipamento_pes_usando <> "QUALQUER") ENTAO
+                                  
+                                     sub_classe <- "BRUXO"
+                                     
+                                     en <- en + 3
+                                     mn <- mn + 4
+                                     dp <- dp + 8
+                                     
+                                     enmax <- enmax + 3
+                                     mnmax <- mnmax + 4
+                                     dpmax <- dpmax + 8
+                                     
+                                  FIMSE
+                              FIMSE
+                          FIMSE
+                      FIMSE
+                      
+                      SE (equipamento_cabeca_usando <> "QUALQUER")ENTAO
+                          SE (equipamento_tronco_usando = "KIMONO") ENTAO
+                              SE (equipamento_pernas_usando = "SAIONA") ENTAO
+                                  SE (equipamento_pes_usando = "SANDALHA") ENTAO
+
+                                     sub_classe <- "SAMURAI"
+                                     
+                                     am <- am + 2
+                                     en <- en + 6
+                                     dn <- dn + 4
+                                     
+                                     ammax <- ammax + 2
+                                     enmax <- enmax + 6
+                                     dnmax <- dnmax + 4
+
+                                  FIMSE
+                              FIMSE
+                          FIMSE
+                      FIMSE
+                      
+                      SE (equipamento_cabeca_usando = "CAPACETE") ENTAO
+                          SE (equipamento_tronco_usando = "COLETE") ENTAO
+                              SE (equipamento_pernas_usando = "JOELHEIRA") ENTAO
+                                  SE (equipamento_pes_usando = "BOTA") ENTAO
+                                  
+                                     sub_classe <- "SOLDADO"
+                                     
+                                     hp <- hp + 12
+                                     en <- en + 4
+                                     dn <- dn + 4
+                                     
+                                     hpmax <- hpmax + 12
+                                     enmax <- enmax + 4
+                                     dnmax <- dnmax + 4
+                                     
+                                  FIMSE
+                              FIMSE
+                          FIMSE
+                      FIMSE
+
+                      SE (equipamento_cabeca_usando = "BONÉ") ou (equipamento_cabeca_usando = "TOUCA") ENTAO
+                          SE (equipamento_tronco_usando = "JAQUETA") ENTAO
+                              SE (equipamento_pernas_usando = "CALÇA") ENTAO
+                                  SE (equipamento_pes_usando = "PATINS") ENTAO
+                                  
+                                     sub_classe <- "ORIGINAL"
+                                     
+                                     hp <- hp + 3
+                                     am <- am + 3
+                                     en <- en + 3
+                                     mn <- mn + 3
+                                     dn <- dn + 3
+                                     dp <- dp + 3
+                                     
+                                     hpmax <- hpmax + 3
+                                     ammax <- ammax + 3
+                                     enmax <- enmax + 3
+                                     mnmax <- mnmax + 3
+                                     dnmax <- dnmax + 3
+                                     dpmax <- dpmax + 3
+                                     
+                                  FIMSE
+                              FIMSE
+                          FIMSE
+                      FIMSE
+
+                      SE (equipamento_cabeca_usando <> "QUALQUER") ENTAO
+                          SE (equipamento_tronco_usando = "TERNO") ENTAO
+                              SE (equipamento_pernas_usando = "CALÇA") ENTAO
+                                  SE (equipamento_pes_usando = "SAPATO") ENTAO
+
+                                     sub_classe <- "SOCIAL"
+                                     
+                                     am <- am + 2
+                                     en <- en + 2
+                                     dp <- dp + 8
+
+                                     ammax <- ammax + 2
+                                     enmax <- enmax + 2
+                                     dpmax <- dpmax + 8
+
+                                  FIMSE
+                              FIMSE
+                          FIMSE
+                      FIMSE
+                  fimprocedimento
+
                   procedimento equipamentos
                   inicio
 
-
+                  subclasse_atual
+                  
                   repita
                      limpatela
 
@@ -16479,7 +16684,11 @@ var
                      escreval ("|| < 5 > PÉS      |            | |4| |                  DN:",dn :4," /",dnmax :4,"           ||")
                      escreval ("||                |            | | | |                                          ||")
                      escreval ("||                |            |_| |_|                  DP:",dp :4," /",dpmax :4,"           ||")
+                     se(sub_classe = "Nenhum") entao
                      escreval ("||                |           /_| 5 |_\                                         ||")
+                     senao
+                     escreval ("||  * ",sub_classe:8," *  |           /_| 5 |_\                                         ||")
+                     fimse
                      escreval ("||                |                                                             ||")
                      escreval ("+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  +")
                      //      equipamento_cabeca_usando <- "Nenhum"
@@ -23272,7 +23481,7 @@ fimprocedimento
                   equipamento_pernas_usando <- "Nenhum"
                      equipamento_pes_usando <- "Nenhum"
                                 arma_usando <- "Nenhum"
-                                
+                                 sub_classe <- "Nenhum"
                                 
                   para x de 0 ate 3 faca
                      melhora[x] <- falso
@@ -23305,7 +23514,7 @@ fimprocedimento
                      consumivel_descri[x] <- falso
                   fimpara
                   
-                  locais_liberados[1] <- verdadeiro
+                  locais_liberados[1] <- falso
                   locais_liberados[2] <- verdadeiro
                   locais_liberados[3] <- verdadeiro
                   locais_liberados[4] <- falso
