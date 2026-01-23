@@ -21324,24 +21324,24 @@ var
 
                            se (desc = falso) entao
                               se (y = -1) ou (grana < 8) entao
-                                 comprar_equipamentos_cabeca
+                                 comprar_equipamentos_cabeca(desc)
                               senao
                                  se (equipamento_cabeca_possui[y] = verdadeiro) entao
-                                    comprar_equipamentos_cabeca
+                                    comprar_equipamentos_cabeca(desc)
                                  fimse
                               fimse
                            senao
                               se (y = -1) ou (grana < 5) entao
-                                 comprar_equipamentos_cabeca
+                                 comprar_equipamentos_cabeca(desc)
                               senao
                                  se (equipamento_cabeca_possui[y] = verdadeiro) entao
-                                    comprar_equipamentos_cabeca
+                                    comprar_equipamentos_cabeca(desc)
                                  fimse
                               fimse
                            fimse
 
                         senao
-                           comprar_equipamentos_cabeca
+                           comprar_equipamentos_cabeca(desc)
                         fimse
                      fimse
 
@@ -21380,7 +21380,7 @@ var
                      fimse
                      /////////////////////////////////////////////
                      limpatela
-                     comprar_equipamentos_cabeca
+                     comprar_equipamentos_cabeca(desc)
 
                   fimprocedimento
 
@@ -21494,24 +21494,24 @@ var
                            
                            se (desc = falso) entao
                               se (y = -1) ou (grana < 10) entao
-                                 comprar_equipamentos_tronco
+                                 comprar_equipamentos_tronco(desc)
                               senao
                                  se (equipamento_tronco_possui[y] = verdadeiro) entao
-                                    comprar_equipamentos_tronco
+                                    comprar_equipamentos_tronco(desc)
                                  fimse
                               fimse
                            senao
                               se (y = -1) ou (grana < 7) entao
-                                 comprar_equipamentos_tronco
+                                 comprar_equipamentos_tronco(desc)
                               senao
                                  se (equipamento_tronco_possui[y] = verdadeiro) entao
-                                    comprar_equipamentos_tronco
+                                    comprar_equipamentos_tronco(desc)
                                  fimse
                               fimse
                            fimse
 
                         senao
-                           comprar_equipamentos_tronco
+                           comprar_equipamentos_tronco(desc)
                         fimse
                      fimse
 
@@ -21546,7 +21546,7 @@ var
                      fimse
                      /////////////////////////////////////////////
                      limpatela
-                     comprar_equipamentos_tronco
+                     comprar_equipamentos_tronco(desc)
 
                   fimprocedimento
 
@@ -23578,157 +23578,4 @@ fimprocedimento
 
                   tela_mundo
 
-               fimalgoritmo
-
-
-               escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
-               escreval ("||                     |                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("||- - - - - - - - - - -|                                                        ||")
-               escreval ("||         VS          |                                                        ||")
-               escreval ("||- - - - - - - - - - -|                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("||     *Cavaleiro*     |                                                        ||")
-               escreval ("|| _ _ _ _ _ _ _ _ _ _ |                                                        ||")
-               escreval ("|||#|     \     /   |%||                                                        ||")
-               escreval ("|||%|   ___\   /___ |#||                                                        ||")
-               escreval ("|||#|    (--)  (@)  |%||                                                        ||")
-               escreval ("|||%|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
-               escreval ("|||#%\    _____    /#%||                                                        ||")
-               escreval ("|||%#%\_ ´----´  _/#%#||                                                        ||")
-               escreval ("|||#%#%#|       |%#%#%||_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ||")
-               escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
-               escreval
-
-
-               escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
-               escreval ("||                     |                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("||- - - - - - - - - - -|                                                        ||")
-               escreval ("||         VS          |                                                        ||")
-               escreval ("||- - - - - - - - - - -|                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("||     *Cavaleiro*     |                                                        ||")
-               escreval ("|| _ _ _ _ _ _ _ _ _ _ |                                                        ||")
-               escreval ("|||#|     \     /   |@||                                                        ||")
-               escreval ("|||@|   ___\   /___ |#||                                                        ||")
-               escreval ("|||#|     (0)  (0)  |@||                                                        ||")
-               escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
-               escreval ("|||#@\     _ __    /#@||                                                        ||")
-               escreval ("|||@#@\_         _/#@#||                                                        ||")
-               escreval ("|||#@#@#|       |@#@#@||                                                        ||")
-               escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
-               escreval
-
-
-               escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
-               escreval ("||                     |                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("||- - - - - - - - - - -|                                                        ||")
-               escreval ("||         VS          |                                                        ||")
-               escreval ("||- - - - - - - - - - -|                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("||     *Cavaleiro*     |                                                        ||")
-               escreval ("|| _ _ _ _ _ _ _ _ _ _ |                                                        ||")
-               escreval ("|||$|     \     /   |$||                                                        ||")
-               escreval ("|||&|   ___\   /___ |&||                                                        ||")
-               escreval ("|||$|   ( 0 ) ( 0 ) |$||                                                        ||")
-               escreval ("|||&|         >     |&||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
-               escreval ("|||$&\   _______   /&$||                                                        ||")
-               escreval ("|||&$&\_ \|_|_|/ _/&$&||                                                        ||")
-               escreval ("|||$&$&$|       |$&$&$||_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ||")
-               escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
-               escreval
-
-               escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
-               escreval ("|| 7 <Inventário>      |                                                        ||")
-               escreval ("|| 8  < Status >       |                                                        ||")
-               escreval ("||- - - - - - - - - - -|                                                        ||")
-               escreval ("|| MN:                 |                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("|| AM:                 |                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("|| HP:                 |                                                        ||")
-               escreval ("||- - - - - - - - - - -|                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("||     *Cavaleiro*     |                                                        ||")
-               escreval ("|| _ _ _ _ _ _ _ _ _ _ |                                                        ||")
-               escreval ("|||#|     \     /   |@||                                                        ||")
-               escreval ("|||@|   ___\   /___ |#||                                                        ||")
-               escreval ("|||#|     (0)  (0)  |@||                                                        ||")
-               escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
-               escreval ("|||#@\     _ __    /#@||                                                        ||")
-               escreval ("|||@#@\_         _/#@#||                                                        ||")
-               escreval ("|||#@#@#|       |@#@#@||                                                        ||")
-               escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
-
-
-               escreval ("| _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  |")
-               escreval ("|| 7 <Inventário>      |                                                   REINO||")
-               escreval ("|| 8  < Status >       |                                                        ||")
-               escreval ("||- - - - - - - - - - -|                                                        ||")
-               escreval ("|| MN:                 |                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("|| AM:                 |                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("|| HP:                 |                                                        ||")
-               escreval ("||- - - - - - - - - - -|                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("||     *Cavaleiro*     |                                                        ||")
-               escreval ("|| _ _ _ _ _ _ _ _ _ _ |                                                        ||")
-               escreval ("|||#|     \     /   |@||                                                        ||")
-               escreval ("|||@|   ___\   /___ |#||                                                        ||")
-               escreval ("|||#|     (0)  (0)  |@||                                                        ||")
-               escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
-               escreval ("|||#@\     _ __    /#@||   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ||")
-               escreval ("|||@#@\_         _/#@#|| XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX. ||")
-               escreval ("|||#@#@#|       |@#@#@||                                                        ||")
-               escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
-
-
-               escreval (" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ")
-               escreval ("|  Para sair, digite 'SAIR' ou 'S' _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
-               escreval ("||                     |                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("||- - - - - - - - - - -|                                                        ||")
-               escreval ("||      *Diálogo*      |                                                        ||")
-               escreval ("||- - - - - - - - - - -|                                                        ||")
-               escreval ("||                     |                                                        ||")
-               escreval ("||     *Cavaleiro*     |                                                        ||")
-               escreval ("|| _ _ _ _ _ _ _ _ _ _ |                                                        ||")
-               escreval ("|||#|     \     /   |@||                                                        ||")
-               escreval ("|||@|   ___\   /___ |#||                                                        ||")
-               escreval ("|||#|     (0)  (0)  |@||                                                        ||")
-               escreval ("|||@|         >     |#||- - - - - - - - - - - - - - - - - - - - - - - - - - - - ||")
-               escreval ("|||#@\     _ __    /#@||                                                        ||")
-               escreval ("|||@#@\_         _/#@#||                                                        ||")
-               escreval ("|||#@#@#|       |@#@#@||                                                        ||")
-               escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
-               
-               
-               escreval ("  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ")
-               escreval ("|  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||                                                                              ||")
-               escreval ("||_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ||")
-               escreval ("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |")
-
+fimalgoritmo
