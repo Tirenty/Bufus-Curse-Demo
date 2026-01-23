@@ -18638,7 +18638,7 @@ var
 
                   procedimento conversa_moradores
                   var
-                     aleatorizar, completados, em_progresso, total: inteiro
+                     aleatorizar, completados, em_progresso, total, indisponivel: inteiro
                      disponivel: logico
                   inicio
                   
@@ -18647,10 +18647,18 @@ var
                      
                      disponivel <- falso
                      
-                     total <- 2
-
+                     se (dia < 21) entao
+                        total <- 1
+                     senao
+                        total <- 4
+                     fimse
+                     
+                     se(primeira_compra_JAYH = verdadeiro)entao
+                        total <- total + 1
+                     fimse
+                     
                      para y de 0 ate total faca
-                        se (missao[y] < 1) entao
+                        se (missao[y] < 1) e (y <> 4) entao
                             disponivel <- verdadeiro
                         fimse
                      fimpara
@@ -18672,23 +18680,29 @@ var
                         se (consumivel_quanti[5] < 1) e (consumivel_quanti[6] < 1) e (missao[1] = 0) ou (missao[1] = 1) entao
                              em_progresso <- em_progresso + 1
                         fimse
-                        ////////////////////////////////
-                        evento <- dia
 
-                        repita
-                           se (evento > 7) entao
-                              evento <- evento - 7
-                           fimse
-                        ate (evento < 8)
-                        ////////////////////////////////
-                        se (Flor_Rara = 0) e (missao[2] = 0) e (evento % 4 <> 0) ou (primeira_compra_JAYH = falso) ou (missao[2] = 1) entao
+                        se (Flor_Rara = 0) e (missao[2] = 0) ou (missao[2] = 1) entao
                             em_progresso <- em_progresso + 1
+                        fimse
+
+                        se (dia >= 21) entao
+                           se (consumivel_quanti[2] < 10) e (missao[3] = 0) ou (missao[3] = 1) entao
+                              em_progresso <- em_progresso + 1
+                           fimse
+
+                           se (aprimorar_livro[1] = falso) e (aprimorar_livro[2] = falso) e (missao[5] = 0) ou (missao[5] = 1) entao
+                              em_progresso <- em_progresso + 1
+                           fimse
                         fimse
 
                         se (em_progresso > total) entao
                            disponivel <- falso
                         fimse
                      fimse
+                     
+                     
+                     
+                     
 ////////////////////////////////////////////////////////////////////////////////////////////////
                      se (disponivel = verdadeiro) entao
                      
@@ -18725,17 +18739,9 @@ var
                               
                            caso 3
                               se (primeira_compra_JAYH = verdadeiro) entao
-                                 evento <- dia
-                                 ////////////////////////////////
-                                 repita
-                                    se (evento > 7) entao
-                                       evento <- evento - 7
-                                    fimse
-                                 ate (evento < 8)
-                                 ////////////////////////////////
                                  limpatela
 
-                                 se (evento % 4 <> 0) e (missao[2] < 1) entao
+                                 se (missao[2] < 1) entao
                                     x <- aleatorizar
                                     se (Flor_Rara = 0) e (missao[2] = 0) entao
                                          x <- 0
